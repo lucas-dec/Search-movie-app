@@ -6,20 +6,38 @@
   top: 40%;
   transform: translateY(-50%);
 
+  @include desktop {
+    width: 90%;
+  }
+
   input.inputSearch {
+    position: relative;
+    top: 0;
     width: 100%;
     height: 40px;
     font-size: 1.1rem;
     border: none;
     background-color: transparent;
     text-align: center;
-    transition: 0.25s;
+    transition: 0.5s all ease;
+
     outline: none;
     border-bottom: 2px solid $neonColor;
+    text-transform: uppercase;
 
+    @include desktop {
+      font-size: 2rem;
+      padding: 1em 0 1em 0;
+    }
+
+    &::placeholder {
+      text-transform: none;
+      font-size: 0.8rem;
+    }
     &:focus {
       background-color: #fff;
       border-bottom: 4px solid $neonColor;
+      top: -20px;
 
       & + button.btnSubmit {
         top: 0px;
@@ -52,6 +70,13 @@
     text-transform: uppercase;
     color: $neonColor;
     padding-left: 10%;
+    cursor: pointer;
+
+    @include desktop {
+      width: 150px;
+      height: 50px;
+      font-size: 1.1rem;
+    }
 
     &:focus {
       top: 0px;

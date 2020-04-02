@@ -1,25 +1,22 @@
 @import "../../variables.scss";
 
-.modalBox {
+.modalFetchMovies {
   width: 80vw;
-  height: 70vh;
+  height: 90vh;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
-  padding: 2em;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 
-  @include tablet {
-    width: 50vw;
-  }
-
   @include desktop {
-    width: 30vw;
+    width: 70vw;
   }
 
-  img.fullLogo {
-    height: 15%;
+  h1.label {
+    text-transform: uppercase;
+    color: $neonColor;
   }
 }

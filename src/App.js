@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "./index.scss";
 import ModalSearch from "./components/ModalSearch/ModalSearch";
+import ModalFetchMovies from "./components/ModalFetchMovies/ModalFetchMovies";
 
 class App extends Component {
   state = {
-    modalSearch: false
+    modalSearch: false,
+    searchValue: "",
+    modalFetchMovies: false
   };
 
   componentDidMount() {
@@ -13,9 +16,12 @@ class App extends Component {
     });
   }
 
-  handleSearchMovie = (e, value) => {
-    e.preventDefault();
-    console.log(value);
+  handleSearchMovie = value => {
+    this.setState({
+      modalSearch: false,
+      searchValue: value,
+      modalFetchMovies: true
+    });
   };
 
   render() {
@@ -23,6 +29,9 @@ class App extends Component {
       <>
         {this.state.modalSearch && (
           <ModalSearch searchMovie={this.handleSearchMovie} />
+        )}
+        {this.state.modalFetchMovies && (
+          <ModalFetchMovies search={this.state.searchValue} />
         )}
       </>
     );
