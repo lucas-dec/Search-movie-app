@@ -1,0 +1,65 @@
+@import "../../variables.scss";
+
+.modalWrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  background-color: #fff;
+  padding: 2em;
+  overflow: scroll;
+
+  @include desktop {
+    width: 70vw;
+  }
+
+  button.btnClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+
+    .label {
+      width: 80%;
+    }
+    .rate {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .rating {
+        display: column;
+        text-align: center;
+        span {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .info span {
+    padding-right: 0.5em;
+    font-size: 0.7rem;
+  }
+  img {
+    width: 100%;
+    margin: 0.5em auto;
+
+    @include desktop {
+      width: 20%;
+    }
+  }
+
+  p.actors {
+    font-size: 0.8rem;
+    margin: 1em auto;
+  }
+}

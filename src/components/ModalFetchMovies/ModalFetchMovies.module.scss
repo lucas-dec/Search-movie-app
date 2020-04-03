@@ -1,8 +1,8 @@
 @import "../../variables.scss";
 
 .modalFetchMovies {
-  width: 80vw;
-  height: 90vh;
+  width: 90vw;
+  height: 95vh;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 1em;
@@ -13,6 +13,7 @@
 
   @include desktop {
     width: 70vw;
+    height: 90vh;
   }
 
   h1.label {
