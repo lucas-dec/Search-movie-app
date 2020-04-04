@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: flex-start;
 
-  @include desktop {
+  @include bigDesktop {
     width: 70vw;
     height: 90vh;
   }

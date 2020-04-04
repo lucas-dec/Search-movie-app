@@ -9,13 +9,13 @@ ul.moviesListWrapper {
   overflow: scroll;
   padding: 1em;
 
-  @include tablet {
+  @include landscapeAndTablet {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
-  @include desktop {
+  @include bigDesktop {
     margin-top: 1.5em;
     flex-direction: row;
     flex-wrap: wrap;
@@ -33,17 +33,16 @@ ul.moviesListWrapper {
     justify-content: flex-start;
     min-height: 400px;
 
-    @include tablet {
-      width: 40%;
+    @include landscapeAndTablet {
+      width: 45%;
     }
 
-    @include desktop {
+    @include bigDesktop {
       width: 20%;
       margin: 1em;
     }
 
     .label {
-      height: 100px;
       text-align: center;
 
       h3.title {
@@ -62,7 +61,7 @@ ul.moviesListWrapper {
       max-height: 300px;
       margin-top: 0.5em;
 
-      @include desktop {
+      @include bigDesktop {
         width: 90%;
         margin: 1em;
       }

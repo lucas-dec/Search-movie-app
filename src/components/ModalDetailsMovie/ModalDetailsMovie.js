@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import styled from "./ModalDetailsMovie.module.scss";
-import RatingIcon from "../../assets/icons/rating.png";
+import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButtonActionWatchlist";
+import IconClose from "../../assets/icons/close.svg";
+import RatingIcon from "../../assets/icons/rating.svg";
+import BigButtonActionWatchlist from "../BigButtonActionWatchlist/BigButtonActionWatchlist";
 
 class ModalDetailsMovie extends Component {
   state = {
@@ -26,12 +29,12 @@ class ModalDetailsMovie extends Component {
       Ratings: [
         {
           Source: "Internet Movie Database",
-          Value: "6.2/10"
+          Value: "6.2/10",
         },
         {
           Source: "Metacritic",
-          Value: "26/100"
-        }
+          Value: "26/100",
+        },
       ],
       Metascore: "26",
       imdbRating: "6.2",
@@ -42,8 +45,8 @@ class ModalDetailsMovie extends Component {
       BoxOffice: "N/A",
       Production: "N/A",
       Website: "N/A",
-      Response: "True"
-    }
+      Response: "True",
+    },
   };
 
   componentDidMount() {
@@ -62,34 +65,53 @@ class ModalDetailsMovie extends Component {
       Awards,
       Poster,
       imdbRating,
-      imdbVotes
+      imdbVotes,
     } = this.state.movie;
+
+    const listActors = Actors.split(",").map((actor, index) => (
+      <li key={index}>{actor}</li>
+    ));
     return (
-      <div className={styled.modalWrapper}>
-        <button onClick={closeModal} className={styled.btnClose}>
-          X
-        </button>
-        <div className={styled.header}>
-          <div className={styled.label}>
-            <h3 className={styled.title}>{Title}</h3>
-            <span className={styled.year}>{Year}</span>
-          </div>
-          <div className={styled.rate}>
-            <img src={RatingIcon} alt="Star - rating icon" />
-            <div className={styled.rating}>
-              <span className={styled.score}>{imdbRating}</span>
-              <span className={styled.votes}>{imdbVotes}</span>
+      <div className={styled.fullContainer}>
+        <div className={styled.modalWrapper}>
+          {<SmallButtonActionWatchlist actionRemove />}
+          <button onClick={closeModal} className={styled.btnClose}>
+            <img src={IconClose} alt="Button close details modal" />
+          </button>
+          <div className={styled.header}>
+            <div className={styled.label}>
+              <h2 className={styled.title}>{Title}</h2>
+              <span className={styled.year}>{Year}</span>
+            </div>
+            <div className={styled.rate}>
+              <img
+                src={RatingIcon}
+                className={styled.star}
+                alt="Star - rating icon"
+              />
+              <div className={styled.rating}>
+                <p className={styled.score}>{imdbRating}</p>
+                <p className={styled.votes}>
+                  {imdbVotes} <span>(votes)</span>
+                </p>
+              </div>
             </div>
           </div>
+          <div className={styled.info}>
+            <span>{Runtime}</span> | <span>{Genre}</span>
+          </div>
+          <img
+            src={Poster}
+            alt="Poster of the Movie"
+            className={styled.poster}
+          />
+          <p className={styled.about}>{Plot}</p>
+          <h3>Stars:</h3>
+          <ul className={styled.actors}>{listActors}</ul>
+          <h3>Awards:</h3>
+          <p className={styled.awards}>{Awards}</p>
+          {<BigButtonActionWatchlist actionRemove />}
         </div>
-        <div className={styled.info}>
-          <span>{Runtime}</span>
-          <span>{Genre}</span>
-        </div>
-        <img src={Poster} alt="Poster of movie" />
-        <p className={styled.about}>{Plot}</p>
-        <p className={styled.actors}>Actors: {Actors}</p>
-        <p className={styled.awards}>{Awards}</p>
       </div>
     );
   }

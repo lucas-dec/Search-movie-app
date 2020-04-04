@@ -6,7 +6,7 @@
   top: 40%;
   transform: translateY(-50%);
 
-  @include desktop {
+  @include bigDesktop {
     width: 90%;
   }
 
@@ -24,7 +24,7 @@
     border-bottom: 2px solid $neonColor;
     text-transform: uppercase;
 
-    @include desktop {
+    @include bigDesktop {
       font-size: 2rem;
       padding: 1em 0 1em 0;
     }
@@ -58,7 +58,7 @@
     width: 100px;
     height: 30px;
     background-color: #fff;
-    background-image: url(../../assets/icons/glases.png);
+    background-image: url(../../assets/icons/glases.svg);
     border: none;
     box-shadow: 0 0 5px 2px $neonColor;
     background-repeat: no-repeat;
@@ -71,7 +71,7 @@
     padding-left: 10%;
     cursor: pointer;
 
-    @include desktop {
+    @include bigDesktop {
       width: 150px;
       height: 50px;
       font-size: 1.1rem;

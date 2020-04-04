@@ -3,21 +3,21 @@ import styled from "./FormSearch.module.scss";
 
 class FormSearch extends Component {
   state = {
-    value: ""
+    value: "",
   };
-  handleChangeInput = e => {
+  handleChangeInput = (e) => {
     this.setState({
-      value: e.target.value
+      value: e.target.value,
     });
   };
 
-  handleSubmitSearch = e => {
+  handleSubmitSearch = (e) => {
     e.preventDefault();
     if (!this.state.value) return;
 
     this.props.searchMovie(this.state.value);
     this.setState({
-      value: ""
+      value: "",
     });
   };
   render() {

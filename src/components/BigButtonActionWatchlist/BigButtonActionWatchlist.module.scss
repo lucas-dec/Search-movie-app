@@ -1,0 +1,27 @@
+@import "../../variables.scss";
+
+button.bigBtnWatchlist {
+  left: 50%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2em auto;
+  padding: 0.5em 1em;
+  width: 60%;
+  max-width: 200px;
+  border-radius: 10px;
+
+  img {
+    padding: 0.5em;
+    margin-right: 0.5em;
+  }
+}
+button.bigBtnWatchlist.addToWatchlist {
+  border: 2px solid green;
+  background-color: greenyellow;
+}
+button.bigBtnWatchlist.removeFromWatchlist {
+  border: 2px solid red;
+  background-color: rgb(250, 158, 158);
+}

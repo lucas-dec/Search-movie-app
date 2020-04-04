@@ -5,17 +5,24 @@ $neutralColor: #5b5656;
 $darkColor: #4d4646;
 
 // media queries
-$tablet-width: 768px;
-$desktop-width: 1024px;
+$landscape-width: 576px;
+$smallDesktop-width: 1024px;
+$bigDesktop-width: 1330px;
 
-@mixin tablet {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+@mixin landscapeAndTablet {
+  @media (min-width: #{$landscape-width}) and (max-width: #{$smallDesktop-width - 1px}) {
     @content;
   }
 }
 
-@mixin desktop {
-  @media (min-width: #{$desktop-width}) {
+@mixin smallDesktop {
+  @media (min-width: #{$smallDesktop-width}) and (max-width: #{$bigDesktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin bigDesktop {
+  @media (min-width: #{$bigDesktop-width}) {
     @content;
   }
 }
