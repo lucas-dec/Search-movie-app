@@ -1,36 +1,39 @@
 import React, { Component } from "react";
-import styled from "./MoviesList.module.scss";
+import styles from "./MoviesList.module.scss";
 import defaultPoster from "../../assets/single-logo.png";
 import ModalDetailsMovie from "../ModalDetailsMovie/ModalDetailsMovie";
 
 class MoviesList extends Component {
   state = {
-    openDetailsModal: false
+    openDetailsModal: false,
+    openMovieID: "",
   };
 
-  handleOpenDetailsModal = () => {
+  handleOpenDetailsModal = (id) => {
     this.setState({
-      openDetailsModal: true
+      openDetailsModal: true,
+      openMovieID: id,
     });
   };
 
   handleCloseDetailsModal = () => {
     this.setState({
-      openDetailsModal: false
+      openDetailsModal: false,
+      openMovieID: "",
     });
   };
 
   render() {
     const { movies } = this.props;
-    const movie = movies.map(movie => (
+    const movie = movies.map((movie) => (
       <li
-        onClick={this.handleOpenDetailsModal}
+        onClick={() => this.handleOpenDetailsModal(movie.imdbID)}
         key={movie.imdbID}
-        className={styled.movieWrapper}
+        className={styles.movieWrapper}
       >
-        <div className={styled.label}>
-          <h3 className={styled.title}>{movie.Title}</h3>
-          <span className={styled.yearInfo}>({movie.Year})</span>
+        <div className={styles.label}>
+          <h3 className={styles.title}>{movie.Title}</h3>
+          <span className={styles.yearInfo}>({movie.Year})</span>
         </div>
         <img
           src={movie.Poster === "N/A" ? defaultPoster : movie.Poster}
@@ -41,9 +44,12 @@ class MoviesList extends Component {
     return (
       <>
         {this.state.openDetailsModal && (
-          <ModalDetailsMovie closeModal={this.handleCloseDetailsModal} />
+          <ModalDetailsMovie
+            movieID={this.state.openMovieID}
+            closeModal={this.handleCloseDetailsModal}
+          />
         )}
-        <ul className={styled.moviesListWrapper}>{movie}</ul>
+        <ul className={styles.moviesListWrapper}>{movie}</ul>
       </>
     );
   }

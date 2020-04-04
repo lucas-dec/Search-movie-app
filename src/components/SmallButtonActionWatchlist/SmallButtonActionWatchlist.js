@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "./SmallButtonActionWatchlist.module.scss";
+import styles from "./SmallButtonActionWatchlist.module.scss";
 import IconAddToWatchlist from "../../assets/icons/addToWatchlist.svg";
 import IconRemoveFromWatchlist from "../../assets/icons/removeFromWatchlist.svg";
 
 const SmallButtonActionWatchlist = ({ ...props }) => (
-  <button className={styled.smallBtnActionWatchlist}>
+  <button className={styles.smallBtnActionWatchlist}>
     {props.actionAdd && (
       <img src={IconAddToWatchlist} alt="Button add movie to watchlist" />
     )}

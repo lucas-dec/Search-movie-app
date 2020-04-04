@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled from "./FormSearch.module.scss";
+import styles from "./FormSearch.module.scss";
 
 class FormSearch extends Component {
   state = {
@@ -22,16 +22,16 @@ class FormSearch extends Component {
   };
   render() {
     return (
-      <form className={styled.formWrapper} onSubmit={this.handleSubmitSearch}>
+      <form className={styles.formWrapper} onSubmit={this.handleSubmitSearch}>
         <input
           type="text"
           value={this.state.value}
           onChange={this.handleChangeInput}
-          className={styled.inputSearch}
+          className={styles.inputSearch}
           placeholder="type search movie"
           required
         />
-        <button type="submit" className={styled.btnSubmit}>
+        <button type="submit" className={styles.btnSubmit}>
           search
         </button>
       </form>

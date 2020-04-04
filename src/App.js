@@ -7,20 +7,27 @@ class App extends Component {
   state = {
     modalSearch: false,
     searchValue: "",
-    modalFetchMovies: false
+    modalFetchMovies: false,
   };
 
   componentDidMount() {
     this.setState({
-      modalSearch: true
+      modalSearch: true,
     });
   }
 
-  handleSearchMovie = value => {
+  handleSearchMovie = (value) => {
     this.setState({
       modalSearch: false,
       searchValue: value,
-      modalFetchMovies: true
+      modalFetchMovies: true,
+    });
+  };
+
+  handleCloseListMovie = () => {
+    this.setState({
+      modalFetchMovies: false,
+      modalSearch: true,
     });
   };
 
@@ -31,7 +38,10 @@ class App extends Component {
           <ModalSearch searchMovie={this.handleSearchMovie} />
         )}
         {this.state.modalFetchMovies && (
-          <ModalFetchMovies search={this.state.searchValue} />
+          <ModalFetchMovies
+            closeListMovie={this.handleCloseListMovie}
+            search={this.state.searchValue}
+          />
         )}
       </>
     );
