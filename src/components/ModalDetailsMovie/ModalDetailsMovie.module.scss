@@ -31,7 +31,7 @@
     overflow: auto;
   }
   @include bigDesktop {
-    width: 50vw;
+    width: 40vw;
     height: 85%;
     overflow: auto;
     padding: 4em;
@@ -104,8 +104,6 @@
     }
 
     @include bigDesktop {
-      // margin-left: 50%;
-      // transform: translateX(-50%);
       width: 30%;
     }
   }

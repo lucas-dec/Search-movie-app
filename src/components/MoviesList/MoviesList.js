@@ -6,7 +6,7 @@ import ModalDetailsMovie from "../ModalDetailsMovie/ModalDetailsMovie";
 class MoviesList extends Component {
   state = {
     openDetailsModal: false,
-    openMovieID: "",
+    openMovieID: null,
   };
 
   handleOpenDetailsModal = (id) => {

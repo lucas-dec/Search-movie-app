@@ -4,14 +4,59 @@ import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButto
 import IconClose from "../../assets/icons/close.svg";
 import RatingIcon from "../../assets/icons/rating.svg";
 import BigButtonActionWatchlist from "../BigButtonActionWatchlist/BigButtonActionWatchlist";
+import Loading from "../Loading/Loading";
 
 class ModalDetailsMovie extends Component {
   state = {
+    isLoading: true,
+    error: null,
     movie: {},
   };
 
   componentDidMount() {
-    //   fetch data
+    const apiKey = "879b3e71";
+    const movieID = this.props.movieID;
+    const API = `http://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`;
+
+    fetch(API)
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            const error = new Error(
+              `Error ${response.status} ${response.statusText}. Please try agine ...`
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+
+        (error) => {
+          const errMessage = new Error(
+            `${error.message}. Please check your network connection and try agine later.`
+          );
+          throw errMessage;
+        }
+      )
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.Response === "True") {
+          this.setState({
+            isLoading: false,
+            movie: { ...response },
+          });
+        } else {
+          const errMessage = new Error(response.Error);
+          throw errMessage;
+        }
+      })
+      .catch((error) =>
+        this.setState({
+          isLoading: false,
+          error: error.message,
+        })
+      );
   }
 
   render() {
@@ -29,12 +74,17 @@ class ModalDetailsMovie extends Component {
       imdbVotes,
     } = this.state.movie;
 
-    const listActors = Actors.split(",").map((actor, index) => (
-      <li key={index}>{actor}</li>
-    ));
+    let listActors;
+    if (Actors) {
+      listActors = Actors.split(",").map((actor, index) => (
+        <li key={index}>{actor}</li>
+      ));
+    }
     return (
       <div className={styles.fullContainer}>
         <div className={styles.modalWrapper}>
+          {this.state.isLoading && <Loading />}
+          {this.state.error && <h3>{this.state.error}</h3>}
           {<SmallButtonActionWatchlist actionRemove />}
           <button onClick={closeModal} className={styles.btnClose}>
             <img src={IconClose} alt="Button close details modal" />
