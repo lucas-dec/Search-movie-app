@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import "./index.scss";
 import ModalSearch from "./components/ModalSearch/ModalSearch";
 import ModalFetchMovies from "./components/ModalFetchMovies/ModalFetchMovies";
+import Watchlist from "./components/Watchlist/Watchlist";
 
 class App extends Component {
   state = {
     modalSearch: false,
     searchValue: "",
     modalFetchMovies: false,
+    userWatchlist: {},
   };
 
   componentDidMount() {
@@ -39,10 +41,12 @@ class App extends Component {
         )}
         {this.state.modalFetchMovies && (
           <ModalFetchMovies
+            userWatchlist={this.state.userWatchlist}
             closeListMovie={this.handleCloseListMovie}
             search={this.state.searchValue}
           />
         )}
+        <Watchlist userWatchlist={this.state.userWatchlist} />
       </>
     );
   }

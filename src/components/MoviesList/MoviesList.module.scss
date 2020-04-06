@@ -19,12 +19,14 @@ ul.moviesListWrapper {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    overflow: auto;
   }
 
   @include bigDesktop {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    overflow: auto;
   }
 
   li.movieWrapper {

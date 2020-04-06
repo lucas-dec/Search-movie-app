@@ -1,0 +1,40 @@
+@import "../../variables.scss";
+
+.watchlistContainer {
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  background-color: $neutralColor;
+  transition: 0.25s all ease;
+
+  &.slideIn {
+    transform: translateX(-300px);
+  }
+  .btnOpenWatchlist {
+    position: absolute;
+    top: 30vh;
+    left: -30px;
+    width: 30px;
+    height: 150px;
+    border: none;
+    border-radius: 100% 0% 0% 100% / 80% 15% 85% 20%;
+    background-color: $neonColor;
+    transition: 0.25s ease;
+
+    &.active {
+      border-radius: 100% 0% 0% 100% / 12% 100% 0% 88%;
+    }
+    &:hover {
+      border-radius: 100% 0% 0% 100% / 12% 100% 0% 88%;
+    }
+  }
+
+  .watchlist {
+    transition: 1s width ease;
+    ul {
+      list-style-position: inside;
+    }
+  }
+}
