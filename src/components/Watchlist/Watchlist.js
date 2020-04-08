@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import WatchlistContext from "../../watchlist-contex";
 import styles from "./Watchlist.module.scss";
 import IconWatchlist from "../../assets/icons/watchlist.svg";
+import FavMovie from "../FavMovie/FavMovie";
 
 class Watchlist extends Component {
   state = {
@@ -14,9 +16,10 @@ class Watchlist extends Component {
   };
 
   render() {
-    // const favMovies = this.state.userWatchlist.map((movie, index) => (
-    //   <li key={index}>{movie}</li>
-    // ));
+    const favMovies = this.context.favMovies;
+    const watchlist = favMovies.map((movie) => (
+      <FavMovie key={movie.id} movie={movie} />
+    ));
     return (
       <>
         <div
@@ -36,15 +39,12 @@ class Watchlist extends Component {
           </button>
           <div className={styles.watchlist}>
             <h1>Watchlist</h1>
-            <ul className={styles.listMovieWrapper}>
-              <li>Rambo</li>
-              <li>Rambo 2</li>
-            </ul>
+            <ul className={styles.listMovieWrapper}>{watchlist}</ul>
           </div>
         </div>
       </>
     );
   }
 }
-
+Watchlist.contextType = WatchlistContext;
 export default Watchlist;

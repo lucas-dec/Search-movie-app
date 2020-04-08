@@ -3,16 +3,20 @@ import styles from "./BigButtonActionWatchlist.module.scss";
 import IconAddToWatchlist from "../../assets/icons/addToWatchlist.svg";
 import IconRemoveFromWatchlist from "../../assets/icons/removeFromWatchlist.svg";
 
-const BigButtonActionWatchlist = ({ ...props }) => (
+const BigButtonActionWatchlist = ({ click, typeAction }) => (
   <>
-    {props.actionAdd && (
-      <button className={styles.bigBtnWatchlist.addToWatchlist}>
+    {typeAction === "add" && (
+      <button
+        onClick={click}
+        className={[styles.bigBtnWatchlist, styles.addToWatchlist].join(" ")}
+      >
         <img src={IconAddToWatchlist} alt="Button add movie to watchlist" />
         Add this movie to My Watchlist !
       </button>
     )}
-    {props.actionRemove && (
+    {typeAction === "remove" && (
       <button
+        onClick={click}
         className={[styles.bigBtnWatchlist, styles.removeFromWatchlist].join(
           " "
         )}

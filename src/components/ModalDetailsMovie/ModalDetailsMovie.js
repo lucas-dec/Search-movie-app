@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import WatchlistContext from "../../watchlist-contex";
 import styles from "./ModalDetailsMovie.module.scss";
 import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButtonActionWatchlist";
 import IconClose from "../../assets/icons/close.svg";
@@ -11,6 +12,9 @@ class ModalDetailsMovie extends Component {
     isLoading: true,
     error: null,
     movie: {},
+    onWatchlist: false,
+    typeAction: "",
+    message: "",
   };
 
   componentDidMount() {
@@ -57,10 +61,34 @@ class ModalDetailsMovie extends Component {
           error: error.message,
         })
       );
+
+    const isFavMovie = Object.values(this.context.favMovies)
+      .flat()
+      .find((movie) => movie.id === this.props.movieID);
+
+    if (isFavMovie) this.setState({ onWatchlist: true, typeAction: "remove" });
+    else if (!isFavMovie)
+      this.setState({ onWatchlist: false, typeAction: "add" });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const isFavMovie = Object.values(this.context.favMovies)
+      .flat()
+      .find((movie) => movie.id === this.props.movieID);
+
+    if (!!isFavMovie !== prevState.onWatchlist) {
+      let tempTypeAction;
+      if (prevState.typeAction === "add") tempTypeAction = "remove";
+      else if (prevState.typeAction === "remove") tempTypeAction = "add";
+      this.setState({
+        onWatchlist: !prevState.onWatchlist,
+        typeAction: tempTypeAction,
+      });
+    }
   }
 
   render() {
-    const { closeModal } = this.props;
+    const { closeModal, movieID } = this.props;
     const {
       Title,
       Year,
@@ -80,52 +108,82 @@ class ModalDetailsMovie extends Component {
         <li key={index}>{actor}</li>
       ));
     }
+
     return (
-      <div className={styles.fullContainer}>
-        <div className={styles.modalWrapper}>
-          {this.state.isLoading && <Loading />}
-          {this.state.error && <h3>{this.state.error}</h3>}
-          {<SmallButtonActionWatchlist actionRemove />}
-          <button onClick={closeModal} className={styles.btnClose}>
-            <img src={IconClose} alt="Button close details modal" />
-          </button>
-          <div className={styles.header}>
-            <div className={styles.label}>
-              <h2 className={styles.title}>{Title}</h2>
-              <span className={styles.year}>{Year}</span>
-            </div>
-            <div className={styles.rate}>
-              <img
-                src={RatingIcon}
-                className={styles.star}
-                alt="Star - rating icon"
+      <>
+        <div className={styles.fullContainer}>
+          <div className={styles.modalWrapper}>
+            {this.state.isLoading && <Loading />}
+            {this.state.error && <h3>{this.state.error}</h3>}
+            <h1>{this.state.message}</h1>
+            {
+              <SmallButtonActionWatchlist
+                click={() =>
+                  this.context.action(
+                    this.state.typeAction,
+                    this.props.movieID,
+                    Title,
+                    Poster
+                  )
+                }
+                typeAction={this.state.typeAction}
               />
-              <div className={styles.rating}>
-                <p className={styles.score}>{imdbRating}</p>
-                <p className={styles.votes}>
-                  {imdbVotes} <span>(votes)</span>
-                </p>
+            }
+            <button onClick={closeModal} className={styles.btnClose}>
+              <img src={IconClose} alt="Button close details modal" />
+            </button>
+            <div className={styles.header}>
+              <div className={styles.label}>
+                <h2 className={styles.title}>{Title}</h2>
+                <span className={styles.year}>{Year}</span>
+              </div>
+              <div className={styles.rate}>
+                <img
+                  src={RatingIcon}
+                  className={styles.star}
+                  alt="Star - rating icon"
+                />
+                <div className={styles.rating}>
+                  <p className={styles.score}>{imdbRating}</p>
+                  <p className={styles.votes}>
+                    {imdbVotes} <span>(votes)</span>
+                  </p>
+                </div>
               </div>
             </div>
+            <div className={styles.info}>
+              <span>{Runtime}</span> | <span>{Genre}</span>
+            </div>
+            <img
+              src={Poster}
+              alt="Poster of the Movie"
+              className={styles.poster}
+            />
+            <p className={styles.about}>{Plot}</p>
+            <h3>Stars:</h3>
+            <ul className={styles.actors}>{listActors}</ul>
+            <h3>Awards:</h3>
+            <p className={styles.awards}>{Awards}</p>
+            {
+              <BigButtonActionWatchlist
+                click={() =>
+                  this.context.action(
+                    this.state.typeAction,
+                    movieID,
+                    Title,
+                    Poster
+                  )
+                }
+                typeAction={this.state.typeAction}
+              />
+            }
           </div>
-          <div className={styles.info}>
-            <span>{Runtime}</span> | <span>{Genre}</span>
-          </div>
-          <img
-            src={Poster}
-            alt="Poster of the Movie"
-            className={styles.poster}
-          />
-          <p className={styles.about}>{Plot}</p>
-          <h3>Stars:</h3>
-          <ul className={styles.actors}>{listActors}</ul>
-          <h3>Awards:</h3>
-          <p className={styles.awards}>{Awards}</p>
-          {<BigButtonActionWatchlist actionRemove />}
         </div>
-      </div>
+        )}
+      </>
     );
   }
 }
 
+ModalDetailsMovie.contextType = WatchlistContext;
 export default ModalDetailsMovie;

@@ -4,9 +4,10 @@
   width: 300px;
   height: 100vh;
   position: fixed;
+  padding: 1em;
   top: 0;
   right: -300px;
-  background-color: $neutralColor;
+  background-color: #fff;
   transition: 0.25s all ease;
 
   &.slideIn {
