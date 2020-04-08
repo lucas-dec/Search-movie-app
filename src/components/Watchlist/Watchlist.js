@@ -15,10 +15,16 @@ class Watchlist extends Component {
     }));
   };
 
+  handleOpenMovie = (id) => {};
+  handleRemoveMovie = (id) => {};
   render() {
     const favMovies = this.context.favMovies;
     const watchlist = favMovies.map((movie) => (
-      <FavMovie key={movie.id} movie={movie} />
+      <FavMovie
+        key={movie.id}
+        click={() => this.context.action("remove", movie.id)}
+        movie={movie}
+      />
     ));
     return (
       <>

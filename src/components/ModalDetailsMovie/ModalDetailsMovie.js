@@ -13,7 +13,7 @@ class ModalDetailsMovie extends Component {
     error: null,
     movie: {},
     onWatchlist: false,
-    typeAction: "",
+    typeAction: "add",
     message: "",
   };
 
@@ -66,7 +66,8 @@ class ModalDetailsMovie extends Component {
       .flat()
       .find((movie) => movie.id === this.props.movieID);
 
-    if (isFavMovie) this.setState({ onWatchlist: true, typeAction: "remove" });
+    if (!!isFavMovie)
+      this.setState({ onWatchlist: true, typeAction: "remove" });
     else if (!isFavMovie)
       this.setState({ onWatchlist: false, typeAction: "add" });
   }

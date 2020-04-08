@@ -3,6 +3,7 @@ li.favMovie {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
   width: 100%;
   height: 100px;
   padding: 0.5em auto;
@@ -14,5 +15,39 @@ li.favMovie {
     margin-right: 0.5em;
     height: 100%;
     padding: 0.5em 0;
+  }
+
+  .removeWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    button {
+      width: 70px;
+      height: 40px;
+      border: 1px solid grey;
+      color: #fff;
+      padding: 0.5em 1em;
+      margin: 0.5em;
+      background-color: rgba(0, 0, 0, 0.6);
+      text-transform: uppercase;
+      font-size: 0.7rem;
+
+      &:hover {
+        border: 2px solid greenyellow;
+      }
+    }
   }
 }
