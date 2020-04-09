@@ -72,8 +72,9 @@ class ModalFetchMovies extends Component {
         </div>
         {this.state.isLoading && <Loading />}
         {this.state.error && <h3>{this.state.error}</h3>}
-
-        <MoviesList movies={this.state.movies} />
+        {!this.state.isLoading && !this.state.error && (
+          <MoviesList movies={this.state.movies} />
+        )}
       </div>
     );
   }

@@ -10,6 +10,8 @@ class App extends Component {
     modalSearch: false,
     searchValue: "",
     modalFetchMovies: false,
+    openDetailsModal: false,
+    openMovieID: null,
     favMovies: [],
     message: "",
   };
@@ -30,13 +32,28 @@ class App extends Component {
 
   handleCloseListMovie = () => {
     this.setState({
-      modalFetchMovies: false,
       modalSearch: true,
+      modalFetchMovies: false,
+    });
+  };
+
+  handleOpenDetailsModal = (id) => {
+    console.log("work");
+    this.setState({
+      openDetailsModal: true,
+      openMovieID: id,
+    });
+  };
+
+  handleCloseDetailsModal = () => {
+    this.setState({
+      openDetailsModal: false,
+      openMovieID: "",
+      message: "",
     });
   };
 
   handleActionWatchlist = (type, id, title, poster) => {
-    console.log(type, id, title, poster);
     if (type === "add")
       this.setState((prevState) => ({
         favMovies: [
@@ -60,6 +77,10 @@ class App extends Component {
 
   render() {
     const contextElements = {
+      openDetailsModal: this.state.openDetailsModal,
+      openMovieID: this.state.openMovieID,
+      handleOpenDetailsModal: this.handleOpenDetailsModal,
+      handleCloseDetailsModal: this.handleCloseDetailsModal,
       favMovies: [...this.state.favMovies],
       message: this.state.message,
       action: this.handleActionWatchlist,

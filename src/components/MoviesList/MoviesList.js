@@ -1,33 +1,15 @@
 import React, { Component } from "react";
+import WatchlistContext from "../../watchlist-contex";
 import styles from "./MoviesList.module.scss";
 import defaultPoster from "../../assets/single-logo.png";
 import ModalDetailsMovie from "../ModalDetailsMovie/ModalDetailsMovie";
 
 class MoviesList extends Component {
-  state = {
-    openDetailsModal: false,
-    openMovieID: null,
-  };
-
-  handleOpenDetailsModal = (id) => {
-    this.setState({
-      openDetailsModal: true,
-      openMovieID: id,
-    });
-  };
-
-  handleCloseDetailsModal = () => {
-    this.setState({
-      openDetailsModal: false,
-      openMovieID: "",
-    });
-  };
-
   render() {
     const { movies } = this.props;
     const movie = movies.map((movie) => (
       <li
-        onClick={() => this.handleOpenDetailsModal(movie.imdbID)}
+        onClick={() => this.context.handleOpenDetailsModal(movie.imdbID)}
         key={movie.imdbID}
         className={styles.movieWrapper}
       >
@@ -37,16 +19,16 @@ class MoviesList extends Component {
         </div>
         <img
           src={movie.Poster === "N/A" ? defaultPoster : movie.Poster}
-          alt="Poster of movie"
+          alt="Poster of the movie"
         />
       </li>
     ));
     return (
       <>
-        {this.state.openDetailsModal && (
+        {this.context.openDetailsModal && (
           <ModalDetailsMovie
-            movieID={this.state.openMovieID}
-            closeModal={this.handleCloseDetailsModal}
+            movieID={this.context.openMovieID}
+            closeModal={() => this.context.handleCloseDetailsModal()}
           />
         )}
         <ul className={styles.moviesListWrapper}>{movie}</ul>
@@ -55,4 +37,5 @@ class MoviesList extends Component {
   }
 }
 
+MoviesList.contextType = WatchlistContext;
 export default MoviesList;

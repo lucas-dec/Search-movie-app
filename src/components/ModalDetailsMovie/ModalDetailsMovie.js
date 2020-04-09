@@ -4,6 +4,7 @@ import styles from "./ModalDetailsMovie.module.scss";
 import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButtonActionWatchlist";
 import IconClose from "../../assets/icons/close.svg";
 import RatingIcon from "../../assets/icons/rating.svg";
+import defaultPoster from "../../assets/single-logo.png";
 import BigButtonActionWatchlist from "../BigButtonActionWatchlist/BigButtonActionWatchlist";
 import Loading from "../Loading/Loading";
 
@@ -84,6 +85,7 @@ class ModalDetailsMovie extends Component {
       this.setState({
         onWatchlist: !prevState.onWatchlist,
         typeAction: tempTypeAction,
+        message: this.context.message,
       });
     }
   }
@@ -116,71 +118,86 @@ class ModalDetailsMovie extends Component {
           <div className={styles.modalWrapper}>
             {this.state.isLoading && <Loading />}
             {this.state.error && <h3>{this.state.error}</h3>}
-            <h1>{this.state.message}</h1>
-            {
-              <SmallButtonActionWatchlist
-                click={() =>
-                  this.context.action(
-                    this.state.typeAction,
-                    this.props.movieID,
-                    Title,
-                    Poster
-                  )
+
+            {!this.state.isLoading && !this.state.error && (
+              <>
+                {
+                  <SmallButtonActionWatchlist
+                    click={() =>
+                      this.context.action(
+                        this.state.typeAction,
+                        this.props.movieID,
+                        Title,
+                        Poster
+                      )
+                    }
+                    typeAction={this.state.typeAction}
+                  />
                 }
-                typeAction={this.state.typeAction}
-              />
-            }
-            <button onClick={closeModal} className={styles.btnClose}>
-              <img src={IconClose} alt="Button close details modal" />
-            </button>
-            <div className={styles.header}>
-              <div className={styles.label}>
-                <h2 className={styles.title}>{Title}</h2>
-                <span className={styles.year}>{Year}</span>
-              </div>
-              <div className={styles.rate}>
-                <img
-                  src={RatingIcon}
-                  className={styles.star}
-                  alt="Star - rating icon"
-                />
-                <div className={styles.rating}>
-                  <p className={styles.score}>{imdbRating}</p>
-                  <p className={styles.votes}>
-                    {imdbVotes} <span>(votes)</span>
-                  </p>
+                <button onClick={closeModal} className={styles.btnClose}>
+                  <img src={IconClose} alt="Button close details modal" />
+                </button>
+                {this.state.message && this.state.typeAction === "add" && (
+                  <h5 className={[styles.notification, styles.add].join(" ")}>
+                    {this.state.message}
+                  </h5>
+                )}
+                {this.state.message && this.state.typeAction === "remove" && (
+                  <h5
+                    className={[styles.notification, styles.remove].join(" ")}
+                  >
+                    {this.state.message}
+                  </h5>
+                )}
+                <div className={styles.header}>
+                  <div className={styles.label}>
+                    <h2 className={styles.title}>{Title}</h2>
+                    <span className={styles.year}>{Year}</span>
+                  </div>
+                  <div className={styles.rate}>
+                    <img
+                      src={RatingIcon}
+                      className={styles.star}
+                      alt="Star - rating icon"
+                    />
+                    <div className={styles.rating}>
+                      <p className={styles.score}>{imdbRating}</p>
+                      <p className={styles.votes}>
+                        {imdbVotes} <span>(votes)</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className={styles.info}>
-              <span>{Runtime}</span> | <span>{Genre}</span>
-            </div>
-            <img
-              src={Poster}
-              alt="Poster of the Movie"
-              className={styles.poster}
-            />
-            <p className={styles.about}>{Plot}</p>
-            <h3>Stars:</h3>
-            <ul className={styles.actors}>{listActors}</ul>
-            <h3>Awards:</h3>
-            <p className={styles.awards}>{Awards}</p>
-            {
-              <BigButtonActionWatchlist
-                click={() =>
-                  this.context.action(
-                    this.state.typeAction,
-                    movieID,
-                    Title,
-                    Poster
-                  )
+                <div className={styles.info}>
+                  <span>{Runtime}</span> | <span>{Genre}</span>
+                </div>
+                <img
+                  src={Poster === "N/A" ? defaultPoster : Poster}
+                  alt="Poster of the Movie"
+                  className={styles.poster}
+                />
+                <p className={styles.about}>{Plot}</p>
+                <h3>Stars:</h3>
+                <ul className={styles.actors}>{listActors}</ul>
+                <h3>Awards:</h3>
+                <p className={styles.awards}>{Awards}</p>
+                {
+                  <BigButtonActionWatchlist
+                    click={() =>
+                      this.context.action(
+                        this.state.typeAction,
+                        movieID,
+                        Title,
+                        Poster
+                      )
+                    }
+                    typeAction={this.state.typeAction}
+                  />
                 }
-                typeAction={this.state.typeAction}
-              />
-            }
+              </>
+            )}
           </div>
         </div>
-        )}
       </>
     );
   }
