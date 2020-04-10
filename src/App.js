@@ -12,6 +12,7 @@ class App extends Component {
     modalFetchMovies: false,
     openDetailsModal: false,
     openMovieID: null,
+    reload: false,
     favMovies: [],
     message: "",
   };
@@ -38,11 +39,17 @@ class App extends Component {
   };
 
   handleOpenDetailsModal = (id) => {
-    console.log("work");
-    this.setState({
-      openDetailsModal: true,
-      openMovieID: id,
-    });
+    if (this.state.openDetailsModal) {
+      this.setState({
+        openDetailsModal: true,
+        openMovieID: id,
+        reload: true,
+      });
+    } else
+      this.setState({
+        openDetailsModal: true,
+        openMovieID: id,
+      });
   };
 
   handleCloseDetailsModal = () => {
@@ -50,6 +57,12 @@ class App extends Component {
       openDetailsModal: false,
       openMovieID: "",
       message: "",
+    });
+  };
+
+  handleOffReload = () => {
+    this.setState({
+      reload: false,
     });
   };
 
@@ -81,6 +94,8 @@ class App extends Component {
       openMovieID: this.state.openMovieID,
       handleOpenDetailsModal: this.handleOpenDetailsModal,
       handleCloseDetailsModal: this.handleCloseDetailsModal,
+      reload: this.state.reload,
+      handleOffReload: this.handleOffReload,
       favMovies: [...this.state.favMovies],
       message: this.state.message,
       action: this.handleActionWatchlist,

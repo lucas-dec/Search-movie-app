@@ -19,6 +19,31 @@ class ModalDetailsMovie extends Component {
   };
 
   componentDidMount() {
+    this.fetchMovie();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const isFavMovie = Object.values(this.context.favMovies)
+      .flat()
+      .find((movie) => movie.id === this.props.movieID);
+
+    if (!!isFavMovie !== prevState.onWatchlist) {
+      let tempTypeAction;
+      if (prevState.typeAction === "add") tempTypeAction = "remove";
+      else if (prevState.typeAction === "remove") tempTypeAction = "add";
+      this.setState({
+        onWatchlist: !prevState.onWatchlist,
+        typeAction: tempTypeAction,
+        message: this.context.message,
+      });
+    }
+    if (this.context.reload) {
+      this.context.handleOffReload();
+      this.fetchMovie();
+    }
+  }
+
+  fetchMovie = () => {
     const apiKey = "879b3e71";
     const movieID = this.props.movieID;
     const API = `http://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`;
@@ -71,24 +96,7 @@ class ModalDetailsMovie extends Component {
       this.setState({ onWatchlist: true, typeAction: "remove" });
     else if (!isFavMovie)
       this.setState({ onWatchlist: false, typeAction: "add" });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const isFavMovie = Object.values(this.context.favMovies)
-      .flat()
-      .find((movie) => movie.id === this.props.movieID);
-
-    if (!!isFavMovie !== prevState.onWatchlist) {
-      let tempTypeAction;
-      if (prevState.typeAction === "add") tempTypeAction = "remove";
-      else if (prevState.typeAction === "remove") tempTypeAction = "add";
-      this.setState({
-        onWatchlist: !prevState.onWatchlist,
-        typeAction: tempTypeAction,
-        message: this.context.message,
-      });
-    }
-  }
+  };
 
   render() {
     const { closeModal, movieID } = this.props;
