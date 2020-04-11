@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./FavMovie.module.scss";
 import defaultPoster from "../../assets/single-logo.png";
+import openIcon from "../../assets/icons/open.svg";
+import removeIcon from "../../assets/icons/removeFromWatchlist.svg";
 
 const FavMovie = ({ movie, open, remove }) => (
   <>
@@ -10,12 +12,16 @@ const FavMovie = ({ movie, open, remove }) => (
         alt={`Poster of the movie - ${movie.title}`}
       />
       <h3>{movie.title}</h3>
-      <div className={styles.removeWrapper}>
+      <div className={styles.optionsWrapper}>
         <button onClick={open} className={styles.btnOpen}>
-          Open
+          <img src={openIcon} alt="Open icon" className={styles.optionBtn} />
         </button>
         <button onClick={remove} className={styles.btnRemove}>
-          Remove
+          <img
+            src={removeIcon}
+            alt="Remove icon"
+            className={styles.optionBtn}
+          />
         </button>
       </div>
     </li>

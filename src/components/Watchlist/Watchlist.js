@@ -51,7 +51,13 @@ class Watchlist extends Component {
           </button>
           <div className={styles.watchlist}>
             <h1>Watchlist</h1>
-            <ul className={styles.listMovieWrapper}>{watchlist}</ul>
+            <ul className={styles.listMovieWrapper}>
+              {watchlist.length > 0 ? (
+                watchlist
+              ) : (
+                <h5 className={styles.emptyList}>Watchlist is empty</h5>
+              )}
+            </ul>
           </div>
         </div>
       </>

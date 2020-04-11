@@ -24,9 +24,13 @@
     border-radius: 100% 0% 0% 100% / 80% 15% 85% 20%;
     background-color: $neonColor;
     transition: 0.25s ease;
-
+    outline: none;
+    cursor: pointer;
     &.active {
-      border-radius: 100% 0% 0% 100% / 12% 100% 0% 88%;
+      img {
+        background-color: #fff;
+        border-radius: 5px;
+      }
     }
     &:hover {
       border-radius: 100% 0% 0% 100% / 12% 100% 0% 88%;
@@ -37,6 +41,16 @@
     transition: 1s width ease;
     ul {
       list-style-position: inside;
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+
+      h5.emptyList {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
   }
 }
