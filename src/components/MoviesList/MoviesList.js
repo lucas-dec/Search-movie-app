@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import WatchlistContext from "../../watchlist-contex";
+import AppContext from "../../app-context";
 import styles from "./MoviesList.module.scss";
 import defaultPoster from "../../assets/single-logo.png";
 import ModalDetailsMovie from "../ModalDetailsMovie/ModalDetailsMovie";
@@ -37,5 +37,5 @@ class MoviesList extends Component {
   }
 }
 
-MoviesList.contextType = WatchlistContext;
+MoviesList.contextType = AppContext;
 export default MoviesList;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import WatchlistContext from "./watchlist-contex";
+import AppContext from "./app-context";
 import "./index.scss";
 import ModalSearch from "./components/ModalSearch/ModalSearch";
 import ModalFetchMovies from "./components/ModalFetchMovies/ModalFetchMovies";
@@ -18,9 +18,18 @@ class App extends Component {
   };
 
   componentDidMount() {
+    const favMovies = JSON.parse(localStorage.getItem("favMovies")) || [];
     this.setState({
       modalSearch: true,
+      favMovies,
     });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.favMovies !== this.state.favMovies) {
+      console.log("update");
+      localStorage.setItem("favMovies", JSON.stringify(this.state.favMovies));
+    }
   }
 
   handleSearchMovie = (value) => {
@@ -102,7 +111,7 @@ class App extends Component {
     };
 
     return (
-      <WatchlistContext.Provider value={contextElements}>
+      <AppContext.Provider value={contextElements}>
         {this.state.modalSearch && (
           <ModalSearch searchMovie={this.handleSearchMovie} />
         )}
@@ -113,7 +122,7 @@ class App extends Component {
           />
         )}
         <Watchlist />
-      </WatchlistContext.Provider>
+      </AppContext.Provider>
     );
   }
 }

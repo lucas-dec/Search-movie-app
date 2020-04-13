@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import WatchlistContext from "../../watchlist-contex";
+import AppContext from "../../app-context";
 import styles from "./Watchlist.module.scss";
 import IconWatchlist from "../../assets/icons/watchlist.svg";
 import FavMovie from "../FavMovie/FavMovie";
@@ -64,5 +64,5 @@ class Watchlist extends Component {
     );
   }
 }
-Watchlist.contextType = WatchlistContext;
+Watchlist.contextType = AppContext;
 export default Watchlist;

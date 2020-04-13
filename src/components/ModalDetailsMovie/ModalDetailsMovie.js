@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import WatchlistContext from "../../watchlist-contex";
+import AppContext from "../../app-context";
 import styles from "./ModalDetailsMovie.module.scss";
 import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButtonActionWatchlist";
 import IconClose from "../../assets/icons/close.svg";
@@ -211,5 +211,5 @@ class ModalDetailsMovie extends Component {
   }
 }
 
-ModalDetailsMovie.contextType = WatchlistContext;
+ModalDetailsMovie.contextType = AppContext;
 export default ModalDetailsMovie;
