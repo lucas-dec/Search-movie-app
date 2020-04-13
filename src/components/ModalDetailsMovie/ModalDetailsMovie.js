@@ -46,7 +46,7 @@ class ModalDetailsMovie extends Component {
   fetchMovie = () => {
     const apiKey = "879b3e71";
     const movieID = this.props.movieID;
-    const API = `http://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`;
+    const API = `https://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`;
 
     fetch(API)
       .then(

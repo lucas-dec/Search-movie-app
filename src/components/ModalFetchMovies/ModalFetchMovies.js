@@ -14,7 +14,7 @@ class ModalFetchMovies extends Component {
   componentDidMount() {
     const apiKey = "879b3e71";
     const searchMovie = this.props.search;
-    const API = `http://www.omdbapi.com/?s=${searchMovie}&apikey=${apiKey}`;
+    const API = `https://www.omdbapi.com/?s=${searchMovie}&apikey=${apiKey}`;
 
     fetch(API)
       .then(
