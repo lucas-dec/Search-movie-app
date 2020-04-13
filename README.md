@@ -10,9 +10,9 @@ https://search-movie-reactjs.netlify.com
  
 ## Screenshots
 
-![Main view](screenshots/main-view.jpg?raw=true "Main view")
-![List of fetch movies](screenshots/fetch-movies.jpg?raw=true "List of fetch movies")
-![All views](screenshots/all-view.jpg?raw=true "All views")
+![Main view](snapshot/main-view.jpg?raw=true "Main view")
+![List of fetch movies](snapshot/fetch-movies.jpg?raw=true "List of fetch movies")
+![All views](snapshot/all-view.jpg?raw=true "All views")
 
 ## Quick Start
 
