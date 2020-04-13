@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import AppContext from "../../app-context";
 import styles from "./MoviesList.module.scss";
 import defaultPoster from "../../assets/single-logo.png";
-import ModalDetailsMovie from "../ModalDetailsMovie/ModalDetailsMovie";
 
 class MoviesList extends Component {
   render() {
@@ -25,12 +24,6 @@ class MoviesList extends Component {
     ));
     return (
       <>
-        {this.context.openDetailsModal && (
-          <ModalDetailsMovie
-            movieID={this.context.openMovieID}
-            closeModal={() => this.context.handleCloseDetailsModal()}
-          />
-        )}
         <ul className={styles.moviesListWrapper}>{movie}</ul>
       </>
     );

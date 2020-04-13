@@ -3,6 +3,8 @@ import AppContext from "./app-context";
 import "./index.scss";
 import ModalSearch from "./components/ModalSearch/ModalSearch";
 import ModalFetchMovies from "./components/ModalFetchMovies/ModalFetchMovies";
+import ModalDetailsMovie from "./components/ModalDetailsMovie/ModalDetailsMovie";
+
 import Watchlist from "./components/Watchlist/Watchlist";
 
 class App extends Component {
@@ -119,6 +121,12 @@ class App extends Component {
           <ModalFetchMovies
             closeListMovie={this.handleCloseListMovie}
             search={this.state.searchValue}
+          />
+        )}
+        {this.state.openDetailsModal && (
+          <ModalDetailsMovie
+            movieID={this.state.openMovieID}
+            closeModal={() => this.handleCloseDetailsModal()}
           />
         )}
         <Watchlist />
