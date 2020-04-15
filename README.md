@@ -1,6 +1,6 @@
 ## Search Movie app - React, Context API + OMDb API
 
-'Search Movie app' give us ability to search for movies and show information details about the movie. User could add the movie to his own watch list.
+Search Movie app give us ability to search for movies and show information details about the movie. User could add the movie to his own watch list.
 The application is using Context API for state managment. All the information about movies is fetching using the OMDb API - The Open Movie Database. Movies added by the user to the watch list are saved to local storage - that after refreshing the browser added movies are still on the list.
 This project was created as a part of self study and was build using ReactJS (Create React App), Context API, OMDb API, localStorge.
 
