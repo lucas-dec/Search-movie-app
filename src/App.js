@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AppContext from "./app-context";
 import "./index.scss";
+import {staticData} from './staticData'
 import ModalSearch from "./components/ModalSearch/ModalSearch";
 import ModalFetchMovies from "./components/ModalFetchMovies/ModalFetchMovies";
 import ModalDetailsMovie from "./components/ModalDetailsMovie/ModalDetailsMovie";
@@ -29,7 +30,6 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.favMovies !== this.state.favMovies) {
-      console.log("update");
       localStorage.setItem("favMovies", JSON.stringify(this.state.favMovies));
     }
   }
@@ -78,7 +78,7 @@ class App extends Component {
   };
 
   handleActionWatchlist = (type, id, title, poster) => {
-    if (type === "add")
+    if (type === staticData.actionType.ADD)
       this.setState((prevState) => ({
         favMovies: [
           ...prevState.favMovies,
@@ -88,13 +88,13 @@ class App extends Component {
             poster,
           },
         ],
-        message: "Movie was added to Your Watchlist",
+        message: staticData.messages.ADD_MESSAGE,
       }));
-    else if (type === "remove") {
+    else if (type === staticData.actionType.REMOVE) {
       const favMovies = this.state.favMovies.filter((movie) => movie.id !== id);
       this.setState({
         favMovies,
-        message: "Movie was removed from Your Watchlist",
+        message: staticData.messages.REMOVE_MESSAGE,
       });
     }
   };
