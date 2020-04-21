@@ -64,45 +64,6 @@
     border: none;
     cursor: pointer;
   }
-  h5.notification {
-    overflow: hidden;
-    float: left;
-    top: 0;
-    margin-left: 20px;
-    width: auto;
-    border: 1px solid;
-    border-radius: 5px;
-    padding: 0.5em;
-    font-size: 0.7rem;
-    animation: showNotification 2.5s ease-out forwards;
-    @keyframes showNotification {
-      0% {
-        opacity: 0;
-        transform: translateY(5px);
-      }
-      15% {
-        opacity: 1;
-        transform: translateY(0px);
-      }
-      85% {
-        opacity: 1;
-        transform: translateY(0px);
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
-    &.add {
-      border-color: red;
-      background-color: #fff;
-    }
-
-    &.remove {
-      border-color: greenyellow;
-      background-color: #fff;
-    }
-  }
 
   .header {
     width: 100%;
@@ -171,17 +132,7 @@
     padding: 0.5em;
     margin-bottom: 0.5em;
   }
-  ul.actors {
-    font-size: 1rem;
-    font-weight: bold;
-    list-style: circle;
-    list-style-position: inside;
-    margin-bottom: 1em;
-    li {
-      padding-left: 1em;
-      font-size: 0.8rem;
-    }
-  }
+
   p.awards {
     font-size: 0.8rem;
     padding-left: 1em;

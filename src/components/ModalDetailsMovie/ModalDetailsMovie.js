@@ -3,8 +3,10 @@ import AppContext from "../../app-context";
 import styles from "./ModalDetailsMovie.module.scss";
 import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButtonActionWatchlist";
 import IconClose from "../../assets/icons/close.svg";
+import Notification from "../Notification/Notification";
 import RatingIcon from "../../assets/icons/rating.svg";
 import defaultPoster from "../../assets/single-logo.png";
+import ActorsList from "../ActorsList/ActorsList";
 import BigButtonActionWatchlist from "../BigButtonActionWatchlist/BigButtonActionWatchlist";
 import Loading from "../Loading/Loading";
 
@@ -92,10 +94,17 @@ class ModalDetailsMovie extends Component {
       .flat()
       .find((movie) => movie.id === this.props.movieID);
 
-    if (!!isFavMovie)
-      this.setState({ onWatchlist: true, typeAction: "remove" });
-    else if (!isFavMovie)
-      this.setState({ onWatchlist: false, typeAction: "add" });
+    if (!!isFavMovie) {
+      this.setState({
+        onWatchlist: true,
+        typeAction: "remove",
+      });
+    } else {
+      this.setState({
+        onWatchlist: false,
+        typeAction: "add",
+      });
+    }
   };
 
   render() {
@@ -113,13 +122,6 @@ class ModalDetailsMovie extends Component {
       imdbVotes,
     } = this.state.movie;
 
-    let listActors;
-    if (Actors) {
-      listActors = Actors.split(",").map((actor, index) => (
-        <li key={index}>{actor}</li>
-      ));
-    }
-
     return (
       <>
         <div className={styles.fullContainer}>
@@ -129,34 +131,28 @@ class ModalDetailsMovie extends Component {
 
             {!this.state.isLoading && !this.state.error && (
               <>
-                {
-                  <SmallButtonActionWatchlist
-                    click={() =>
-                      this.context.action(
-                        this.state.typeAction,
-                        this.props.movieID,
-                        Title,
-                        Poster
-                      )
-                    }
-                    typeAction={this.state.typeAction}
-                  />
-                }
+                <SmallButtonActionWatchlist
+                  click={() =>
+                    this.context.action(
+                      this.state.typeAction,
+                      this.props.movieID,
+                      Title,
+                      Poster
+                    )
+                  }
+                  typeAction={this.state.typeAction}
+                />
                 <button onClick={closeModal} className={styles.btnClose}>
                   <img src={IconClose} alt="Button close details modal" />
                 </button>
-                {this.state.message && this.state.typeAction === "add" && (
-                  <h5 className={[styles.notification, styles.add].join(" ")}>
-                    {this.state.message}
-                  </h5>
+
+                {this.state.message && (
+                  <Notification
+                    message={this.state.message}
+                    typeAction={this.state.typeAction}
+                  />
                 )}
-                {this.state.message && this.state.typeAction === "remove" && (
-                  <h5
-                    className={[styles.notification, styles.remove].join(" ")}
-                  >
-                    {this.state.message}
-                  </h5>
-                )}
+
                 <div className={styles.header}>
                   <div className={styles.label}>
                     <h2 className={styles.title}>{Title}</h2>
@@ -185,23 +181,27 @@ class ModalDetailsMovie extends Component {
                   className={styles.poster}
                 />
                 <p className={styles.about}>{Plot}</p>
-                <h3>Stars:</h3>
-                <ul className={styles.actors}>{listActors}</ul>
+
+                {Actors ? (
+                  <ActorsList actors={Actors} />
+                ) : (
+                  <h4>Sorry, we don't have information about actors ...</h4>
+                )}
+
                 <h3>Awards:</h3>
                 <p className={styles.awards}>{Awards}</p>
-                {
-                  <BigButtonActionWatchlist
-                    click={() =>
-                      this.context.action(
-                        this.state.typeAction,
-                        movieID,
-                        Title,
-                        Poster
-                      )
-                    }
-                    typeAction={this.state.typeAction}
-                  />
-                }
+
+                <BigButtonActionWatchlist
+                  click={() =>
+                    this.context.action(
+                      this.state.typeAction,
+                      movieID,
+                      Title,
+                      Poster
+                    )
+                  }
+                  typeAction={this.state.typeAction}
+                />
               </>
             )}
           </div>
