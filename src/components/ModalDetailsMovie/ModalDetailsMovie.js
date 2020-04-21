@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import AppContext from "../../app-context";
 import styles from "./ModalDetailsMovie.module.scss";
 import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButtonActionWatchlist";
-import IconClose from "../../assets/icons/close.svg";
 import Notification from "../Notification/Notification";
-import RatingIcon from "../../assets/icons/rating.svg";
+import HeaderDetailsMovie from "../HeaderDetailsMovie/HeaderDetailsMovie";
 import defaultPoster from "../../assets/single-logo.png";
 import ActorsList from "../ActorsList/ActorsList";
 import BigButtonActionWatchlist from "../BigButtonActionWatchlist/BigButtonActionWatchlist";
 import Loading from "../Loading/Loading";
+import CloseModalButton from "../CloseModalButton/CloseModalButton";
 
 class ModalDetailsMovie extends Component {
   state = {
@@ -110,97 +110,75 @@ class ModalDetailsMovie extends Component {
   render() {
     const { closeModal, movieID } = this.props;
     const {
-      Title,
-      Year,
-      Runtime,
-      Genre,
-      Actors,
-      Plot,
-      Awards,
-      Poster,
+      Title: title,
+      Year: year,
+      Runtime: runtime,
+      Genre: genre,
+      Actors: actors,
+      Plot: plot,
+      Awards: awards,
+      Poster: poster,
       imdbRating,
       imdbVotes,
     } = this.state.movie;
+    const { isLoading, error, typeAction, message } = this.state;
 
     return (
       <>
         <div className={styles.fullContainer}>
           <div className={styles.modalWrapper}>
-            {this.state.isLoading && <Loading />}
-            {this.state.error && <h3>{this.state.error}</h3>}
+            {isLoading && <Loading />}
+            {error && <h3>{error}</h3>}
 
-            {!this.state.isLoading && !this.state.error && (
+            {!isLoading && !error && (
               <>
                 <SmallButtonActionWatchlist
-                  click={() =>
+                  handleAction={() =>
                     this.context.action(
                       this.state.typeAction,
                       this.props.movieID,
-                      Title,
-                      Poster
+                      title,
+                      poster
                     )
                   }
-                  typeAction={this.state.typeAction}
+                  typeAction={typeAction}
                 />
-                <button onClick={closeModal} className={styles.btnClose}>
-                  <img src={IconClose} alt="Button close details modal" />
-                </button>
 
-                {this.state.message && (
-                  <Notification
-                    message={this.state.message}
-                    typeAction={this.state.typeAction}
-                  />
+                <CloseModalButton closeModal={closeModal} />
+
+                {message && (
+                  <Notification message={message} typeAction={typeAction} />
                 )}
 
-                <div className={styles.header}>
-                  <div className={styles.label}>
-                    <h2 className={styles.title}>{Title}</h2>
-                    <span className={styles.year}>{Year}</span>
-                  </div>
-                  <div className={styles.rate}>
-                    <img
-                      src={RatingIcon}
-                      className={styles.star}
-                      alt="Star - rating icon"
-                    />
-                    <div className={styles.rating}>
-                      <p className={styles.score}>{imdbRating}</p>
-                      <p className={styles.votes}>
-                        {imdbVotes} <span>(votes)</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <HeaderDetailsMovie
+                  title={title}
+                  year={year}
+                  imdbRating={imdbRating}
+                  imdbVotes={imdbVotes}
+                />
+
                 <div className={styles.info}>
-                  <span>{Runtime}</span> | <span>{Genre}</span>
+                  <span>{runtime}</span> | <span>{genre}</span>
                 </div>
+
                 <img
-                  src={Poster === "N/A" ? defaultPoster : Poster}
+                  src={poster === "N/A" ? defaultPoster : poster}
                   alt="Poster of the Movie"
                   className={styles.poster}
                 />
-                <p className={styles.about}>{Plot}</p>
 
-                {Actors ? (
-                  <ActorsList actors={Actors} />
-                ) : (
-                  <h4>Sorry, we don't have information about actors ...</h4>
-                )}
+                <p className={styles.about}>{plot}</p>
+
+                {actors ? <ActorsList actors={actors} /> : <h4>Sorry, we don't have information about actors ...</h4>}
 
                 <h3>Awards:</h3>
-                <p className={styles.awards}>{Awards}</p>
+                <p className={styles.awards}>{awards}</p>
 
                 <BigButtonActionWatchlist
-                  click={() =>
-                    this.context.action(
-                      this.state.typeAction,
-                      movieID,
-                      Title,
-                      Poster
-                    )
+                  handleAction={() =>
+                    this.context.action(typeAction, movieID, title, poster)
                   }
-                  typeAction={this.state.typeAction}
+                  typeAction={typeAction}
                 />
               </>
             )}
