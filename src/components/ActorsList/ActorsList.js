@@ -1,15 +1,12 @@
 import React from "react";
 import styles from "./ActorsList.module.scss";
+import SingleActor from "../SingleActor/SingleActor";
 
-const ActorsList = ({ actors }) => {
-  const listActors = actors
-    .split(",")
-    .map((actor, index) => <li key={index}>{actor}</li>);
-  return (
-    <>
-      <h3>Stars:</h3>
-      <ul className={styles.actors}>{listActors}</ul>
-    </>
-  );
-};
+const ActorsList = ({ actors }) => (
+  <>
+    <h3>Stars:</h3>
+    <ul className={styles.actors}>{<SingleActor actors={actors} />}</ul>
+  </>
+);
+
 export default ActorsList;

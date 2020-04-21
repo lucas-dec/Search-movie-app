@@ -54,33 +54,7 @@
     padding: 3em 4em;
   }
 
-  .info span {
+  span {
     font-size: 0.6rem;
-  }
-  img.poster {
-    width: 100%;
-    margin: 0.5em 0;
-
-    @include landscapeAndTablet {
-      width: 50%;
-    }
-
-    @include smallDesktop {
-      width: 40%;
-    }
-
-    @include bigDesktop {
-      width: 30%;
-    }
-  }
-  p.about {
-    text-align: justify;
-    padding: 0.5em;
-    margin-bottom: 0.5em;
-  }
-
-  p.awards {
-    font-size: 0.8rem;
-    padding-left: 1em;
   }
 }
