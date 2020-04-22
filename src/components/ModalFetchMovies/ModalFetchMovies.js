@@ -1,60 +1,51 @@
 import React, { Component } from "react";
 import styles from "./ModalFetchMovies.module.scss";
+import { staticData } from "../../staticData";
 import MoviesList from "../MoviesList/MoviesList";
 import IconBack from "../../assets/icons/back.svg";
 import Loading from "../Loading/Loading";
 
 class ModalFetchMovies extends Component {
   state = {
-    isLoading: true,
+    isLoading: false,
     movies: [],
     error: null,
   };
 
   componentDidMount() {
-    const apiKey = "879b3e71";
+    this.setState({
+      isLoading: true,
+    });
+    const apiKey = staticData.apiKey;
     const searchMovie = this.props.search;
     const API = `https://www.omdbapi.com/?s=${searchMovie}&apikey=${apiKey}`;
 
     fetch(API)
-      .then(
-        (response) => {
-          if (response.ok) {
-            return response;
-          } else {
-            const error = new Error(
-              `Error ${response.status} ${response.statusText}. Please try agine ...`
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-
-        (error) => {
-          const errMessage = new Error(
-            `${error.message}. Please check your network connection and try agine later.`
-          );
-          throw errMessage;
-        }
-      )
-      .then((response) => response.json())
       .then((response) => {
-        if (response.Response === "True") {
-          this.setState({
-            isLoading: false,
-            movies: response.Search,
-          });
+        if (response.ok) {
+          return response;
         } else {
-          const errMessage = new Error(response.Error);
-          throw errMessage;
+          throw Error(`Error ${response.status} ${response.statusText}.`);
         }
       })
-      .catch((error) =>
-        this.setState({
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.Response === "True") {
+          this.setState({
+            isLoading: false,
+            movies: data.Search,
+          });
+        } else {
+          throw Error(data.Error);
+        }
+      })
+      .catch((error) => {
+        const err = `Sorry, We have a problem. ${error.message}. Please try agine ...`;
+        return this.setState({
           isLoading: false,
-          error: error.message,
-        })
-      );
+          error: err,
+        });
+      });
   }
 
   render() {

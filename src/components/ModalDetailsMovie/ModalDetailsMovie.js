@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import AppContext from "../../app-context";
 import styles from "./ModalDetailsMovie.module.scss";
+import { staticData } from "../../staticData";
+import Loading from "../Loading/Loading";
+import DisplayErrorMessage from "../DisplayErrorMessage/DisplayErrorMessage";
+import CloseModalButton from "../CloseModalButton/CloseModalButton";
 import SmallButtonActionWatchlist from "../SmallButtonActionWatchlist/SmallButtonActionWatchlist";
 import Notification from "../Notification/Notification";
 import HeaderDetailsMovie from "../HeaderDetailsMovie/HeaderDetailsMovie";
@@ -8,14 +12,12 @@ import InfoDetailsMovie from "../InfoDetailsMovie/InfoDetailsMovie";
 import PosterDetailsMovie from "../PosterDetailsMovie/PosterDetailsMovie";
 import PlotDetailsMovie from "../PlotDetailsMovie/PlotDetailsMovie";
 import ActorsList from "../ActorsList/ActorsList";
-import BigButtonActionWatchlist from "../BigButtonActionWatchlist/BigButtonActionWatchlist";
-import Loading from "../Loading/Loading";
-import CloseModalButton from "../CloseModalButton/CloseModalButton";
 import AwardsDetailsMovie from "../AwardsDetailsMovie/AwardsDetailsMovie";
+import BigButtonActionWatchlist from "../BigButtonActionWatchlist/BigButtonActionWatchlist";
 
 class ModalDetailsMovie extends Component {
   state = {
-    isLoading: true,
+    isLoading: false,
     error: null,
     movie: {},
     onWatchlist: false,
@@ -28,14 +30,17 @@ class ModalDetailsMovie extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { actionType } = staticData;
+
     const isFavMovie = Object.values(this.context.favMovies)
       .flat()
       .find((movie) => movie.id === this.props.movieID);
 
     if (!!isFavMovie !== prevState.onWatchlist) {
       let tempTypeAction;
-      if (prevState.typeAction === "add") tempTypeAction = "remove";
-      else if (prevState.typeAction === "remove") tempTypeAction = "add";
+      if (prevState.typeAction === actionType.ADD)
+        tempTypeAction = actionType.REMOVE;
+      else tempTypeAction = actionType.ADD;
       this.setState({
         onWatchlist: !prevState.onWatchlist,
         typeAction: tempTypeAction,
@@ -49,49 +54,38 @@ class ModalDetailsMovie extends Component {
   }
 
   fetchMovie = () => {
-    const apiKey = "879b3e71";
+    const { apiKey, actionType } = staticData;
+    this.setState({
+      isLoading: true,
+    });
     const movieID = this.props.movieID;
     const API = `https://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`;
 
     fetch(API)
-      .then(
-        (response) => {
-          if (response.ok) {
-            return response;
-          } else {
-            const error = new Error(
-              `Error ${response.status} ${response.statusText}. Please try agine ...`
-            );
-            error.response = response;
-            throw error;
-          }
-        },
-
-        (error) => {
-          const errMessage = new Error(
-            `${error.message}. Please check your network connection and try agine later.`
-          );
-          throw errMessage;
-        }
-      )
-      .then((response) => response.json())
       .then((response) => {
-        if (response.Response === "True") {
-          this.setState({
-            isLoading: false,
-            movie: { ...response },
-          });
+        if (response.ok) {
+          return response;
         } else {
-          const errMessage = new Error(response.Error);
-          throw errMessage;
+          throw Error(`Error ${response.status} ${response.statusText}.`);
         }
       })
-      .catch((error) =>
-        this.setState({
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.Response === "True") {
+          this.setState({
+            isLoading: false,
+            movie: { ...data },
+          });
+        } else {
+          throw Error(data.Error);
+        }
+      })
+      .catch((error) => {
+        return this.setState({
           isLoading: false,
           error: error.message,
-        })
-      );
+        });
+      });
 
     const isFavMovie = Object.values(this.context.favMovies)
       .flat()
@@ -100,12 +94,12 @@ class ModalDetailsMovie extends Component {
     if (!!isFavMovie) {
       this.setState({
         onWatchlist: true,
-        typeAction: "remove",
+        typeAction: actionType.REMOVE,
       });
     } else {
       this.setState({
         onWatchlist: false,
-        typeAction: "add",
+        typeAction: actionType.ADD,
       });
     }
   };
@@ -135,7 +129,8 @@ class ModalDetailsMovie extends Component {
         <div className={styles.fullContainer}>
           <div className={styles.modalWrapper}>
             {isLoading && <Loading />}
-            {error && <h3>{error}</h3>}
+            {error && <DisplayErrorMessage error={error} />}
+            <CloseModalButton closeModal={closeModal} />
 
             {!isLoading && !error && (
               <>
@@ -145,8 +140,6 @@ class ModalDetailsMovie extends Component {
                   }
                   typeAction={typeAction}
                 />
-
-                <CloseModalButton closeModal={closeModal} />
 
                 {message && (
                   <Notification message={message} typeAction={typeAction} />
