@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import styles from "./ModalFetchMovies.module.scss";
 import { staticData } from "../../staticData";
-import MoviesList from "../MoviesList/MoviesList";
-import IconBack from "../../assets/icons/back.svg";
 import Loading from "../Loading/Loading";
+import HeaderFetchMovies from "../HeaderFetchMovies/HeaderFetchMovies";
+import DisplayErrorMessage from "../DisplayErrorMessage/DisplayErrorMessage";
+import MoviesList from "../MoviesList/MoviesList";
 
 class ModalFetchMovies extends Component {
   state = {
@@ -40,32 +41,24 @@ class ModalFetchMovies extends Component {
         }
       })
       .catch((error) => {
-        const err = `Sorry, We have a problem. ${error.message}. Please try agine ...`;
         return this.setState({
           isLoading: false,
-          error: err,
+          error: error.message,
         });
       });
   }
 
   render() {
+    const { isLoading, error, movies } = this.state;
+    const { closeListMovie, search } = this.props;
+
     return (
       <div className={styles.modalFetchMovies}>
-        <div className={styles.header}>
-          <button
-            onClick={this.props.closeListMovie}
-            className={styles.btnBack}
-          >
-            <img src={IconBack} alt="Go back" />
-            <div className={styles.btnLabel}>go back</div>
-          </button>
-          <h1 className={styles.label}>{this.props.search}</h1>
-        </div>
-        {this.state.isLoading && <Loading />}
-        {this.state.error && <h3>{this.state.error}</h3>}
-        {!this.state.isLoading && !this.state.error && (
-          <MoviesList movies={this.state.movies} />
-        )}
+        <HeaderFetchMovies goBack={closeListMovie} search={search} />
+
+        {isLoading && <Loading />}
+        {error && <DisplayErrorMessage error={error} />}
+        {!isLoading && !error && <MoviesList movies={movies} />}
       </div>
     );
   }

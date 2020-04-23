@@ -5,6 +5,7 @@ class FormSearch extends Component {
   state = {
     value: "",
   };
+
   handleChangeInput = (e) => {
     this.setState({
       value: e.target.value,
@@ -12,14 +13,16 @@ class FormSearch extends Component {
   };
 
   handleSubmitSearch = (e) => {
+    const { value } = this.state;
     e.preventDefault();
-    if (!this.state.value) return;
+    if (!value) return;
 
-    this.props.searchMovie(this.state.value);
+    this.props.searchMovie(value);
     this.setState({
       value: "",
     });
   };
+
   render() {
     return (
       <form className={styles.formWrapper} onSubmit={this.handleSubmitSearch}>

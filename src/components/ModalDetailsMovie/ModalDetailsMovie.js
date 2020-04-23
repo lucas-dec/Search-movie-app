@@ -154,7 +154,7 @@ class ModalDetailsMovie extends Component {
 
                 <InfoDetailsMovie runtime={runtime} genre={genre} />
 
-                <PosterDetailsMovie poster={poster} />
+                <PosterDetailsMovie poster={poster} title={title} />
 
                 <PlotDetailsMovie plot={plot} />
 

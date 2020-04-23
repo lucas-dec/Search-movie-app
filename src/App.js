@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AppContext from "./app-context";
 import "./index.scss";
-import {staticData} from './staticData'
+import { staticData } from "./staticData";
 import ModalSearch from "./components/ModalSearch/ModalSearch";
 import ModalFetchMovies from "./components/ModalFetchMovies/ModalFetchMovies";
 import ModalDetailsMovie from "./components/ModalDetailsMovie/ModalDetailsMovie";
@@ -112,20 +112,26 @@ class App extends Component {
       action: this.handleActionWatchlist,
     };
 
+    const {
+      modalSearch,
+      modalFetchMovies,
+      openDetailsModal,
+      searchValue,
+      openMovieID,
+    } = this.state;
+
     return (
       <AppContext.Provider value={contextElements}>
-        {this.state.modalSearch && (
-          <ModalSearch searchMovie={this.handleSearchMovie} />
-        )}
-        {this.state.modalFetchMovies && (
+        {modalSearch && <ModalSearch searchMovie={this.handleSearchMovie} />}
+        {modalFetchMovies && (
           <ModalFetchMovies
             closeListMovie={this.handleCloseListMovie}
-            search={this.state.searchValue}
+            search={searchValue}
           />
         )}
-        {this.state.openDetailsModal && (
+        {openDetailsModal && (
           <ModalDetailsMovie
-            movieID={this.state.openMovieID}
+            movieID={openMovieID}
             closeModal={() => this.handleCloseDetailsModal()}
           />
         )}
