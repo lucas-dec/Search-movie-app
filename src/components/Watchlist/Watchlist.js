@@ -22,8 +22,7 @@ class Watchlist extends Component {
     const watchlist = favMovies.map((movie) => (
       <FavMovie
         key={movie.id}
-        open={() => this.context.handleOpenDetailsModal(movie.id)}
-        remove={() => this.context.action("remove", movie.id)}
+        movieID={movie.id}
         title={movie.title}
         poster={movie.poster}
       />

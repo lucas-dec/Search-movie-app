@@ -22,7 +22,6 @@ class ModalDetailsMovie extends Component {
     movie: {},
     onWatchlist: false,
     typeAction: "add",
-    message: "",
   };
 
   componentDidMount() {
@@ -31,13 +30,7 @@ class ModalDetailsMovie extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { actionType } = staticData;
-    const {
-      movieID,
-      favMovies,
-      message,
-      reload,
-      handleOffReload,
-    } = this.context;
+    const { movieID, favMovies, reload, handleOffReload } = this.context;
 
     const isFavMovie = Object.values(favMovies)
       .flat()
@@ -51,7 +44,6 @@ class ModalDetailsMovie extends Component {
       this.setState({
         onWatchlist: !prevState.onWatchlist,
         typeAction: tempTypeAction,
-        message,
       });
     }
     if (reload) {
@@ -112,7 +104,7 @@ class ModalDetailsMovie extends Component {
   };
 
   render() {
-    const { movieID } = this.context;
+    const { movieID, message } = this.context;
     const {
       Title: title,
       Year: year,
@@ -125,8 +117,7 @@ class ModalDetailsMovie extends Component {
       imdbRating,
       imdbVotes,
     } = this.state.movie;
-    const { isLoading, error, typeAction, message } = this.state;
-    console.log(movieID);
+    const { isLoading, error, typeAction } = this.state;
     return (
       <>
         <div className={styles.fullContainer}>

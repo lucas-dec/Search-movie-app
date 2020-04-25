@@ -15,6 +15,12 @@ export class AppProvider extends Component {
     message: "",
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.favMovies !== this.state.favMovies) {
+      localStorage.setItem("favMovies", JSON.stringify(this.state.favMovies));
+    }
+  }
+
   handleModalSearch = (flag) => {
     this.setState({
       modalSearch: flag,
@@ -39,11 +45,13 @@ export class AppProvider extends Component {
         modalDetails: true,
         movieID: id,
         reload: true,
+        message: "",
       });
     } else
       this.setState({
         modalDetails: true,
         movieID: id,
+        message: "",
       });
   };
 
@@ -51,7 +59,6 @@ export class AppProvider extends Component {
     this.setState({
       modalDetails: false,
       movieID: "",
-      message: "",
     });
   };
 
@@ -62,7 +69,17 @@ export class AppProvider extends Component {
   };
 
   handleActionWatchlist = (type, id, title, poster) => {
-    if (type === staticData.actionType.ADD)
+    const { actionType, messages } = staticData;
+    let messageText = "";
+    if (id !== this.state.movieID) {
+      messageText = "";
+    } else if (type === actionType.ADD) {
+      messageText = messages.ADD_MESSAGE;
+    } else if (type === actionType.REMOVE) {
+      messageText = messages.REMOVE_MESSAGE;
+    }
+
+    if (type === actionType.ADD)
       this.setState((prevState) => ({
         favMovies: [
           ...prevState.favMovies,
@@ -72,13 +89,13 @@ export class AppProvider extends Component {
             poster,
           },
         ],
-        message: staticData.messages.ADD_MESSAGE,
+        message: messageText,
       }));
-    else if (type === staticData.actionType.REMOVE) {
+    else if (type === actionType.REMOVE) {
       const favMovies = this.state.favMovies.filter((movie) => movie.id !== id);
       this.setState({
         favMovies,
-        message: staticData.messages.REMOVE_MESSAGE,
+        message: messageText,
       });
     }
   };
@@ -101,24 +118,5 @@ export class AppProvider extends Component {
     );
   }
 }
-
-// const contextElements = {
-//   openDetailsModal: this.state.openDetailsModal,
-//   openMovieID: this.state.openMovieID,
-//   handleOpenDetailsModal: this.handleOpenDetailsModal,
-//   handleCloseDetailsModal: this.handleCloseDetailsModal,
-//   reload: this.state.reload,
-//   handleOffReload: this.handleOffReload,
-//   favMovies: [...this.state.favMovies],
-//   message: this.state.message,
-//   action: this.handleActionWatchlist,
-// };
-
-// componentDidUpdate(prevProps, prevState) {
-//   if (prevState.favMovies !== this.state.favMovies) {
-//     localStorage.setItem("favMovies", JSON.stringify(this.state.favMovies));
-//   }
-// }
-//
 
 export default AppContext;
