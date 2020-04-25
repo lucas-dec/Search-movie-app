@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styles from "./FormSearch.module.scss";
+import AppContext from "../../AppContext";
 
 class FormSearch extends Component {
   state = {
@@ -41,5 +42,5 @@ class FormSearch extends Component {
     );
   }
 }
-
+FormSearch.contextType = AppContext;
 export default FormSearch;

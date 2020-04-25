@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AppContext from "../../app-context";
+import AppContext from "../../AppContext";
 import styles from "./Watchlist.module.scss";
 import ButtonOpenWatchlist from "../ButtonOpenWatchlist/ButtonOpenWatchlist";
 import FavMovie from "../FavMovie/FavMovie";

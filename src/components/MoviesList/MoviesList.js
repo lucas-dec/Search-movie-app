@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AppContext from "../../app-context";
+import AppContext from "../../AppContext";
 import styles from "./MoviesList.module.scss";
 import defaultPoster from "../../assets/single-logo.png";
 

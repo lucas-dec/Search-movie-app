@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AppContext from "../../app-context";
+import AppContext from "../../AppContext";
 import styles from "./ModalDetailsMovie.module.scss";
 import { staticData } from "../../staticData";
 import Loading from "../Loading/Loading";

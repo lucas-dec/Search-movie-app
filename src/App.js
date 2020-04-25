@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import AppContext from "../../app-context";
-
-import { AppProvider } from "./app-context";
+import AppContext from "./AppContext";
 import "./index.scss";
 import ModalSearch from "./components/ModalSearch/ModalSearch";
 import ModalFetchMovies from "./components/ModalFetchMovies/ModalFetchMovies";
@@ -17,38 +15,31 @@ class App extends Component {
   handleSearchMovie = (value) => {
     this.setState({
       searchValue: value,
-      modalFetchMovies: true,
     });
+    this.context.handleModalSearch(false);
+    this.context.handleModalFetchMovies(true);
   };
 
   render() {
-    const {
-      modalSearch,
-      modalFetchMovies,
-      openDetailsModal,
-      searchValue,
-      openMovieID,
-    } = this.state;
-
     return (
-      <AppProvider>
-        {modalSearch && <ModalSearch searchMovie={this.handleSearchMovie} />}
-        {modalFetchMovies && (
-          <ModalFetchMovies
-            closeListMovie={this.handleCloseListMovie}
-            search={searchValue}
-          />
+      <>
+        {this.context.modalSearch && (
+          <ModalSearch searchMovie={this.handleSearchMovie} />
         )}
-        {openDetailsModal && (
+        {this.context.modalFetchMovies && (
+          <ModalFetchMovies search={this.state.searchValue} />
+        )}
+        {this.context.openDetailsModal && (
           <ModalDetailsMovie
-            movieID={openMovieID}
+            movieID={this.context.openMovieID}
             closeModal={() => this.handleCloseDetailsModal()}
           />
         )}
         <Watchlist />
-      </AppProvider>
+      </>
     );
   }
 }
+
 App.contextType = AppContext;
 export default App;
