@@ -50,11 +50,11 @@ class ModalFetchMovies extends Component {
 
   render() {
     const { isLoading, error, movies } = this.state;
-    const { closeListMovie, search } = this.props;
+    const { search } = this.props;
 
     return (
       <div className={styles.modalFetchMovies}>
-        <HeaderFetchMovies goBack={closeListMovie} search={search} />
+        <HeaderFetchMovies search={search} />
 
         {isLoading && <Loading />}
         {error && <DisplayErrorMessage error={error} />}

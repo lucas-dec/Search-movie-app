@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { staticData } from "./staticData";
 
 const favMovies = JSON.parse(localStorage.getItem("favMovies")) || [];
 const AppContext = React.createContext();
@@ -9,7 +10,7 @@ export class AppProvider extends Component {
     modalFetchMovies: false,
     modalDetails: false,
     favMovies,
-    openMovieID: null,
+    movieID: null,
     reload: false,
     message: "",
   };
@@ -24,11 +25,6 @@ export class AppProvider extends Component {
       modalFetchMovies: flag,
     });
   };
-  handleModalDetails = (flag) => {
-    this.setState({
-      modalDetails: flag,
-    });
-  };
 
   handleCloseListMovie = () => {
     this.setState({
@@ -37,13 +33,66 @@ export class AppProvider extends Component {
     });
   };
 
+  handleOpenDetailsModal = (id) => {
+    if (this.state.modalDetails) {
+      this.setState({
+        modalDetails: true,
+        movieID: id,
+        reload: true,
+      });
+    } else
+      this.setState({
+        modalDetails: true,
+        movieID: id,
+      });
+  };
+
+  handleCloseDetailsModal = () => {
+    this.setState({
+      modalDetails: false,
+      movieID: "",
+      message: "",
+    });
+  };
+
+  handleOffReload = () => {
+    this.setState({
+      reload: false,
+    });
+  };
+
+  handleActionWatchlist = (type, id, title, poster) => {
+    if (type === staticData.actionType.ADD)
+      this.setState((prevState) => ({
+        favMovies: [
+          ...prevState.favMovies,
+          {
+            id,
+            title,
+            poster,
+          },
+        ],
+        message: staticData.messages.ADD_MESSAGE,
+      }));
+    else if (type === staticData.actionType.REMOVE) {
+      const favMovies = this.state.favMovies.filter((movie) => movie.id !== id);
+      this.setState({
+        favMovies,
+        message: staticData.messages.REMOVE_MESSAGE,
+      });
+    }
+  };
+
   render() {
     const contextElements = {
       ...this.state,
       handleModalSearch: this.handleModalSearch,
       handleModalFetchMovies: this.handleModalFetchMovies,
-      handleModalDetails: this.handleModalDetails,
       handleCloseListMovie: this.handleCloseListMovie,
+      handleOpenDetailsModal: this.handleOpenDetailsModal,
+      handleCloseDetailsModal: this.handleCloseDetailsModal,
+      handleOffReload: this.handleOffReload,
+      handleAction: this.handleActionWatchlist,
     };
     return (
       <AppContext.Provider value={contextElements}>
@@ -71,55 +120,5 @@ export class AppProvider extends Component {
 //   }
 // }
 //
-
-// handleOpenDetailsModal = (id) => {
-//   if (this.state.openDetailsModal) {
-//     this.setState({
-//       openDetailsModal: true,
-//       openMovieID: id,
-//       reload: true,
-//     });
-//   } else
-//     this.setState({
-//       openDetailsModal: true,
-//       openMovieID: id,
-//     });
-// };
-
-// handleCloseDetailsModal = () => {
-//   this.setState({
-//     openDetailsModal: false,
-//     openMovieID: "",
-//     message: "",
-//   });
-// };
-
-// handleOffReload = () => {
-//   this.setState({
-//     reload: false,
-//   });
-// };
-
-// handleActionWatchlist = (type, id, title, poster) => {
-//   if (type === staticData.actionType.ADD)
-//     this.setState((prevState) => ({
-//       favMovies: [
-//         ...prevState.favMovies,
-//         {
-//           id,
-//           title,
-//           poster,
-//         },
-//       ],
-//       message: staticData.messages.ADD_MESSAGE,
-//     }));
-//   else if (type === staticData.actionType.REMOVE) {
-//     const favMovies = this.state.favMovies.filter((movie) => movie.id !== id);
-//     this.setState({
-//       favMovies,
-//       message: staticData.messages.REMOVE_MESSAGE,
-//     });
-//   }
-// };
 
 export default AppContext;

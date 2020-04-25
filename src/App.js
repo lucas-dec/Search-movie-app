@@ -29,9 +29,8 @@ class App extends Component {
         {this.context.modalFetchMovies && (
           <ModalFetchMovies search={this.state.searchValue} />
         )}
-        {this.context.openDetailsModal && (
+        {this.context.modalDetails && (
           <ModalDetailsMovie
-            movieID={this.context.openMovieID}
             closeModal={() => this.handleCloseDetailsModal()}
           />
         )}

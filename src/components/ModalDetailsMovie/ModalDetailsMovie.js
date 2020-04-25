@@ -31,10 +31,17 @@ class ModalDetailsMovie extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { actionType } = staticData;
+    const {
+      movieID,
+      favMovies,
+      message,
+      reload,
+      handleOffReload,
+    } = this.context;
 
-    const isFavMovie = Object.values(this.context.favMovies)
+    const isFavMovie = Object.values(favMovies)
       .flat()
-      .find((movie) => movie.id === this.props.movieID);
+      .find((movie) => movie.id === movieID);
 
     if (!!isFavMovie !== prevState.onWatchlist) {
       let tempTypeAction;
@@ -44,11 +51,11 @@ class ModalDetailsMovie extends Component {
       this.setState({
         onWatchlist: !prevState.onWatchlist,
         typeAction: tempTypeAction,
-        message: this.context.message,
+        message,
       });
     }
-    if (this.context.reload) {
-      this.context.handleOffReload();
+    if (reload) {
+      handleOffReload();
       this.fetchMovie();
     }
   }
@@ -58,7 +65,7 @@ class ModalDetailsMovie extends Component {
     this.setState({
       isLoading: true,
     });
-    const movieID = this.props.movieID;
+    const { movieID, favMovies } = this.context;
     const API = `https://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`;
 
     fetch(API)
@@ -87,9 +94,9 @@ class ModalDetailsMovie extends Component {
         });
       });
 
-    const isFavMovie = Object.values(this.context.favMovies)
+    const isFavMovie = Object.values(favMovies)
       .flat()
-      .find((movie) => movie.id === this.props.movieID);
+      .find((movie) => movie.id === movieID);
 
     if (!!isFavMovie) {
       this.setState({
@@ -104,12 +111,8 @@ class ModalDetailsMovie extends Component {
     }
   };
 
-  handleAction = (typeAction, movieID, title, poster) => {
-    this.context.action(typeAction, movieID, title, poster);
-  };
-
   render() {
-    const { closeModal, movieID } = this.props;
+    const { movieID } = this.context;
     const {
       Title: title,
       Year: year,
@@ -123,22 +126,22 @@ class ModalDetailsMovie extends Component {
       imdbVotes,
     } = this.state.movie;
     const { isLoading, error, typeAction, message } = this.state;
-
+    console.log(movieID);
     return (
       <>
         <div className={styles.fullContainer}>
           <div className={styles.modalWrapper}>
             {isLoading && <Loading />}
             {error && <DisplayErrorMessage error={error} />}
-            <CloseModalButton closeModal={closeModal} />
+            <CloseModalButton />
 
             {!isLoading && !error && (
               <>
                 <SmallButtonActionWatchlist
-                  handleAction={() =>
-                    this.handleAction(typeAction, movieID, title, poster)
-                  }
                   typeAction={typeAction}
+                  movieID={movieID}
+                  title={title}
+                  poster={poster}
                 />
 
                 {message && (
@@ -167,10 +170,10 @@ class ModalDetailsMovie extends Component {
                 <AwardsDetailsMovie awards={awards} />
 
                 <BigButtonActionWatchlist
-                  handleAction={() =>
-                    this.handleAction(typeAction, movieID, title, poster)
-                  }
                   typeAction={typeAction}
+                  movieID={movieID}
+                  title={title}
+                  poster={poster}
                 />
               </>
             )}
