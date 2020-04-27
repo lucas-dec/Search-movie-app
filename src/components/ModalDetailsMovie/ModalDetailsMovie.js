@@ -37,13 +37,12 @@ class ModalDetailsMovie extends Component {
       .find((movie) => movie.id === movieID);
 
     if (!!isFavMovie !== prevState.onWatchlist) {
-      let tempTypeAction;
-      if (prevState.typeAction === actionType.ADD)
-        tempTypeAction = actionType.REMOVE;
-      else tempTypeAction = actionType.ADD;
       this.setState({
         onWatchlist: !prevState.onWatchlist,
-        typeAction: tempTypeAction,
+        typeAction:
+          prevState.typeAction === actionType.ADD
+            ? actionType.REMOVE
+            : actionType.ADD,
       });
     }
     if (reload) {
@@ -62,13 +61,11 @@ class ModalDetailsMovie extends Component {
 
     fetch(API)
       .then((response) => {
-        if (response.ok) {
-          return response;
-        } else {
-          throw Error(`Error ${response.status} ${response.statusText}.`);
+        if (!response.ok) {
+          throw Error(response.statusText);
         }
+        return response.json();
       })
-      .then((response) => response.json())
       .then((data) => {
         if (data.Response === "True") {
           this.setState({
@@ -80,7 +77,7 @@ class ModalDetailsMovie extends Component {
         }
       })
       .catch((error) => {
-        return this.setState({
+        this.setState({
           isLoading: false,
           error: error.message,
         });

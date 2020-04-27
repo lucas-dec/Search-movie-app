@@ -5,20 +5,13 @@ import { staticData } from "../../staticData";
 import IconAddToWatchlist from "../../assets/icons/addToWatchlist.svg";
 import IconRemoveFromWatchlist from "../../assets/icons/removeFromWatchlist.svg";
 
-const BigButtonActionWatchlist = ({ typeAction, movieID, title, poster }) => (
-  <AppContext.Consumer>
-    {(context) => {
-      const { actionType } = staticData;
-      let addClass, removeClass;
-      if (typeAction === actionType.ADD) {
-        addClass = [styles.bigBtnWatchlist, styles.addToWatchlist].join(" ");
-      } else {
-        removeClass = [styles.bigBtnWatchlist, styles.removeFromWatchlist].join(
-          " "
-        );
-      }
-
-      return (
+const BigButtonActionWatchlist = ({ typeAction, movieID, title, poster }) => {
+  const addClass = [styles.bigBtnWatchlist, styles.addToWatchlist].join(" ");
+  const removeClass = [styles.bigBtnWatchlist, styles.removeFromWatchlist].join(" ");
+  const { actionType } = staticData;
+  return (
+    <AppContext.Consumer>
+      {(context) => (
         <>
           {typeAction === actionType.ADD ? (
             <button
@@ -48,9 +41,9 @@ const BigButtonActionWatchlist = ({ typeAction, movieID, title, poster }) => (
             </button>
           )}
         </>
-      );
-    }}
-  </AppContext.Consumer>
-);
+      )}
+    </AppContext.Consumer>
+  );
+};
 
 export default BigButtonActionWatchlist;

@@ -5,7 +5,9 @@ import SingleActor from "../SingleActor/SingleActor";
 const ActorsList = ({ actors }) => (
   <>
     <h3>Stars:</h3>
-    <ul className={styles.actors}>{<SingleActor actors={actors} />}</ul>
+    <ul className={styles.actors}>
+      <SingleActor actors={actors} />
+    </ul>
   </>
 );
 

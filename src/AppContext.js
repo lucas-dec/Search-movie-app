@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { favMovies } from "./utils/storage/localStorage";
+import { updateStorage } from "./utils/storage/localStorage";
 import { staticData } from "./staticData";
 
-const favMovies = JSON.parse(localStorage.getItem("favMovies")) || [];
 const AppContext = React.createContext();
 
 export class AppProvider extends Component {
@@ -17,7 +18,7 @@ export class AppProvider extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.favMovies !== this.state.favMovies) {
-      localStorage.setItem("favMovies", JSON.stringify(this.state.favMovies));
+      updateStorage(this.state.favMovies);
     }
   }
 
@@ -70,14 +71,6 @@ export class AppProvider extends Component {
 
   handleActionWatchlist = (type, id, title, poster) => {
     const { actionType, messages } = staticData;
-    let messageText = "";
-    if (id !== this.state.movieID) {
-      messageText = "";
-    } else if (type === actionType.ADD) {
-      messageText = messages.ADD_MESSAGE;
-    } else if (type === actionType.REMOVE) {
-      messageText = messages.REMOVE_MESSAGE;
-    }
 
     if (type === actionType.ADD)
       this.setState((prevState) => ({
@@ -89,9 +82,13 @@ export class AppProvider extends Component {
             poster,
           },
         ],
-        message: messageText,
+        message: messages.ADD_MESSAGE,
       }));
     else if (type === actionType.REMOVE) {
+      let messageText = messages.REMOVE_MESSAGE;
+      if (id !== this.state.movieID) {
+        messageText = "";
+      }
       const favMovies = this.state.favMovies.filter((movie) => movie.id !== id);
       this.setState({
         favMovies,

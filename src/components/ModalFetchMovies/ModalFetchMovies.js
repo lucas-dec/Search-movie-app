@@ -23,13 +23,11 @@ class ModalFetchMovies extends Component {
 
     fetch(API)
       .then((response) => {
-        if (response.ok) {
-          return response;
-        } else {
-          throw Error(`Error ${response.status} ${response.statusText}.`);
+        if (!response.ok) {
+          throw Error(response.statusText);
         }
+        return response.json();
       })
-      .then((response) => response.json())
       .then((data) => {
         if (data.Response === "True") {
           this.setState({
@@ -41,7 +39,7 @@ class ModalFetchMovies extends Component {
         }
       })
       .catch((error) => {
-        return this.setState({
+        this.setState({
           isLoading: false,
           error: error.message,
         });
