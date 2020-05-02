@@ -1,0 +1,28 @@
+// colors
+$neonColor: #1ee3cf;
+$lightColor: #f5eaea;
+$neutralColor: #5b5656;
+$darkColor: #4d4646;
+
+// media queries
+$landscape-width: 576px;
+$smallDesktop-width: 1024px;
+$bigDesktop-width: 1330px;
+
+@mixin landscapeAndTablet {
+  @media (min-width: #{$landscape-width}) and (max-width: #{$smallDesktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin smallDesktop {
+  @media (min-width: #{$smallDesktop-width}) and (max-width: #{$bigDesktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin bigDesktop {
+  @media (min-width: #{$bigDesktop-width}) {
+    @content;
+  }
+}

@@ -1,0 +1,24 @@
+@import "../../variables.scss";
+
+.watchlistContainer {
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  padding: 1em;
+  top: 0;
+  right: -300px;
+  background-color: #fff;
+  transition: 0.25s all ease;
+  z-index: 999;
+
+  &.slideIn {
+    transform: translateX(-300px);
+  }
+
+  h5.emptyList {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

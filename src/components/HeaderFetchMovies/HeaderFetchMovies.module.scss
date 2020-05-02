@@ -1,0 +1,61 @@
+@import "../../variables.scss";
+
+.header {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  overflow: hidden;
+
+  button.btnBack {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    background-color: $neonColor;
+    border-radius: 50%;
+    transition: 0.25s ease;
+    cursor: pointer;
+
+    &:hover {
+      width: 100px;
+      border-radius: 20px;
+    }
+    &:hover .btnLabel {
+      opacity: 1;
+      transform: translateX(50px);
+    }
+    img {
+      width: 40px;
+      z-index: 1;
+    }
+    .btnLabel {
+      position: absolute;
+      left: 0;
+      opacity: 0;
+      border: 2px solid $neonColor;
+      border-radius: 0 10px 10px 0;
+      transform: translateX(-100%);
+      transition: 0.25s ease;
+      padding: 0.5em 0;
+    }
+  }
+
+  h1.label {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    color: $neonColor;
+  }
+}

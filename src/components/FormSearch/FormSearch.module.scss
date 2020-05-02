@@ -1,0 +1,89 @@
+@import "../../variables.scss";
+
+.formWrapper {
+  position: relative;
+  width: 100%;
+  top: 40%;
+  transform: translateY(-50%);
+
+  @include bigDesktop {
+    width: 90%;
+  }
+
+  input.inputSearch {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    transition: 0.5s all ease;
+    outline: none;
+    border-bottom: 2px solid $neonColor;
+    text-transform: uppercase;
+
+    @include bigDesktop {
+      font-size: 2rem;
+      padding: 1em 0 1em 0;
+      height: 40px;
+    }
+
+    &::placeholder {
+      text-transform: none;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+    }
+    &:focus {
+      background-color: #fff;
+      border-bottom: 4px solid $neonColor;
+      top: -20px;
+
+      & + button.btnSubmit {
+        top: 0px;
+        background-color: #fff;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  button.btnSubmit {
+    visibility: hidden;
+    position: relative;
+    opacity: 0;
+    margin-top: 1em;
+    top: -10px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 40px;
+    background-color: #fff;
+    background-image: url(../../assets/icons/glases.svg);
+    border: none;
+    box-shadow: 0 0 5px 2px $neonColor;
+    background-repeat: no-repeat;
+    background-size: 25%;
+    background-position: 10% 50%;
+    transition: 0.5s ease;
+    border-radius: 10px;
+    text-transform: uppercase;
+    color: $neonColor;
+    padding-left: 10%;
+    cursor: pointer;
+
+    @include bigDesktop {
+      width: 150px;
+      height: 40px;
+      font-size: 1.1rem;
+    }
+
+    &:focus {
+      top: 0px;
+      background-color: #fff;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

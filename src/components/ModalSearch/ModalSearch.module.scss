@@ -1,0 +1,25 @@
+@import "../../variables.scss";
+
+.modalBox {
+  width: 80vw;
+  height: 70vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  @include landscapeAndTablet {
+    width: 50vw;
+  }
+
+  @include bigDesktop {
+    width: 30vw;
+  }
+
+  img.fullLogo {
+    height: 15%;
+  }
+}

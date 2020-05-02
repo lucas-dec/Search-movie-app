@@ -1,0 +1,9 @@
+.watchlist {
+  transition: 1s width ease;
+  ul {
+    list-style-position: inside;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+  }
+}

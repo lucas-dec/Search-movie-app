@@ -1,0 +1,42 @@
+.header {
+  width: 100%;
+  margin-top: 2em;
+  display: flex;
+
+  .label {
+    width: 75%;
+    span.year {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  }
+
+  .rate {
+    display: flex;
+    width: 25%;
+    align-items: flex-start;
+    justify-content: center;
+
+    img.star {
+      right: 0;
+      width: 50%;
+      max-width: 48px;
+      height: auto;
+    }
+    .rating {
+      text-align: center;
+      p.score {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      p.votes {
+        font-size: 0.6rem;
+
+        span {
+          display: block;
+          font-size: 0.5rem;
+        }
+      }
+    }
+  }
+}

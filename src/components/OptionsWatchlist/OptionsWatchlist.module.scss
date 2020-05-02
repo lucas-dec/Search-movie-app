@@ -1,0 +1,81 @@
+@import "../../variables.scss";
+
+.optionsWrapper {
+  width: 40px;
+  height: 100%;
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @include smallDesktop {
+    opacity: 0;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: 0.3s ease;
+  }
+  @include bigDesktop {
+    flex-direction: row;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: 0.3s ease;
+  }
+  &:hover {
+    opacity: 1;
+  }
+
+  button {
+    width: 100%;
+    height: 35px;
+    border: none;
+    background-color: transparent;
+    transition: 0.25s ease;
+    cursor: pointer;
+
+    img.optionBtn {
+      width: 100%;
+      margin: auto;
+      padding: 0;
+    }
+
+    @include smallDesktop {
+      width: 70px;
+      height: 40px;
+      border: 1px solid grey;
+      color: #fff;
+      padding: 0.5em 1em;
+      margin: 0.5em;
+      background-color: #fff;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+    }
+    @include bigDesktop {
+      width: 50px;
+      height: 35px;
+      color: #fff;
+      padding: 0.5em 1em;
+      margin: 0.5em;
+      background-color: #fff;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+
+      img.optionBtn {
+        width: 60%;
+      }
+    }
+    &:hover {
+      box-shadow: 0 0 2px 1px greenyellow;
+    }
+  }
+}

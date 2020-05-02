@@ -1,0 +1,11 @@
+ul.actors {
+  font-size: 1rem;
+  font-weight: bold;
+  list-style: circle;
+  list-style-position: inside;
+  margin-bottom: 1em;
+  li {
+    padding-left: 1em;
+    font-size: 0.8rem;
+  }
+}

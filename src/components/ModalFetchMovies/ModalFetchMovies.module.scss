@@ -1,0 +1,18 @@
+@import "../../variables.scss";
+
+.modalFetchMovies {
+  width: 90vw;
+  height: 95vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  @include bigDesktop {
+    width: 70vw;
+    height: 90vh;
+  }
+}
