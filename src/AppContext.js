@@ -85,14 +85,10 @@ export class AppProvider extends Component {
         message: messages.ADD_MESSAGE,
       }));
     else if (type === actionType.REMOVE) {
-      let messageText = messages.REMOVE_MESSAGE;
-      if (id !== this.state.movieID) {
-        messageText = "";
-      }
       const favMovies = this.state.favMovies.filter((movie) => movie.id !== id);
       this.setState({
         favMovies,
-        message: messageText,
+        message: id !== this.state.movieID ? "" : messages.REMOVE_MESSAGE,
       });
     }
   };

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "./ModalFetchMovies.module.scss";
 import { staticData } from "../../staticData";
+import { getData } from "../../utils/data/fetchData";
 import Loading from "../Loading/Loading";
 import HeaderFetchMovies from "../HeaderFetchMovies/HeaderFetchMovies";
 import DisplayErrorMessage from "../DisplayErrorMessage/DisplayErrorMessage";
@@ -21,22 +22,12 @@ class ModalFetchMovies extends Component {
     const searchMovie = this.props.search;
     const API = `https://www.omdbapi.com/?s=${searchMovie}&apikey=${apiKey}`;
 
-    fetch(API)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
+    getData(API)
       .then((data) => {
-        if (data.Response === "True") {
-          this.setState({
-            isLoading: false,
-            movies: data.Search,
-          });
-        } else {
-          throw Error(data.Error);
-        }
+        this.setState({
+          isLoading: false,
+          movies: data.Search,
+        });
       })
       .catch((error) => {
         this.setState({

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AppContext from "../../AppContext";
 import styles from "./ModalDetailsMovie.module.scss";
 import { staticData } from "../../staticData";
+import { getData } from "../../utils/data/fetchData";
 import Loading from "../Loading/Loading";
 import DisplayErrorMessage from "../DisplayErrorMessage/DisplayErrorMessage";
 import CloseModalButton from "../CloseModalButton/CloseModalButton";
@@ -59,22 +60,12 @@ class ModalDetailsMovie extends Component {
     const { movieID, favMovies } = this.context;
     const API = `https://www.omdbapi.com/?i=${movieID}&apikey=${apiKey}`;
 
-    fetch(API)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
+    getData(API)
       .then((data) => {
-        if (data.Response === "True") {
-          this.setState({
-            isLoading: false,
-            movie: { ...data },
-          });
-        } else {
-          throw Error(data.Error);
-        }
+        this.setState({
+          isLoading: false,
+          movie: { ...data },
+        });
       })
       .catch((error) => {
         this.setState({
